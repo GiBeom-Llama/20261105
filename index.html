@@ -32,6 +32,11 @@ img{max-width:100%}
   --bad: #B42318;
   --bad-bg: #FCEBE9;
   --focus: #2F6FEB;
+  /* 류별 색: 1 산화성 고체 · 2 가연성 고체 · 3 자연발화·금수 · 4 인화성 액체 · 5 자기반응성 · 6 산화성 액체 */
+  --c1: #E8590C; --c2: #946200; --c3: #1C6DD0; --c4: #C8102E; --c5: #7B3FB6; --c6: #A07800;
+  --dot: rgba(20, 33, 61, 0.07);
+  --shadow: 0 1px 2px rgba(20, 33, 61, 0.06), 0 10px 28px -12px rgba(20, 33, 61, 0.18);
+  --tape-a: #FFC21A; --tape-b: #14213D;
   --font-display: "Black Han Sans", "IBM Plex Sans KR", "Malgun Gothic", sans-serif;
   --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   --font-num: "IBM Plex Mono", ui-monospace, Consolas, monospace;
@@ -41,12 +46,18 @@ img{max-width:100%}
     --paper: #0E1420; --card: #162033; --ink: #E7EBF3; --muted: #9AA3B7; --line: #2A3550;
     --signal: #E63A50; --on-signal: #FFFFFF; --good: #4CC38A; --good-bg: #12301F;
     --bad: #FF7B6E; --bad-bg: #3A1A1A; --focus: #7AA5FF; color-scheme: dark;
+    --c1: #FF8A3D; --c2: #D9A35A; --c3: #5B9BFF; --c4: #FF5468; --c5: #B48CF2; --c6: #E6C04A;
+    --dot: rgba(231, 235, 243, 0.05);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 28px -12px rgba(0, 0, 0, 0.5);
   }
 }
 :root[data-theme="dark"] {
   --paper: #0E1420; --card: #162033; --ink: #E7EBF3; --muted: #9AA3B7; --line: #2A3550;
   --signal: #E63A50; --on-signal: #FFFFFF; --good: #4CC38A; --good-bg: #12301F;
   --bad: #FF7B6E; --bad-bg: #3A1A1A; --focus: #7AA5FF; color-scheme: dark;
+  --c1: #FF8A3D; --c2: #D9A35A; --c3: #5B9BFF; --c4: #FF5468; --c5: #B48CF2; --c6: #E6C04A;
+  --dot: rgba(231, 235, 243, 0.05);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 28px -12px rgba(0, 0, 0, 0.5);
 }
 
 * { box-sizing: border-box; }
@@ -210,6 +221,7 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--focus); out
   border: 1.5px solid var(--line); background: var(--paper); color: var(--ink);
 }
 .admin-list { display: grid; gap: 14px; min-width: 0; }
+.is-admin .wrap { max-width: 960px; }
 .export-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
 #app > .panel + .panel { margin-top: 16px; }
 .export-row .btn { min-height: 44px; }
@@ -265,14 +277,125 @@ table.subs { width: 100%; border-collapse: collapse; font-size: 14px; min-width:
 .breakdown span { font-size: 13px; color: var(--muted); }
 .breakdown b { font-family: var(--font-num); font-weight: 500; font-size: 16px; font-variant-numeric: tabular-nums; }
 
-@media (prefers-reduced-motion: reduce) { .bar i { transition: none; } }
+/* ---------- 꾸밈: 위험물 표지판 느낌 ---------- */
+body {
+  background-color: var(--paper);
+  background-image: radial-gradient(var(--dot) 1.2px, transparent 1.2px);
+  background-size: 18px 18px;
+}
+.plate {
+  position: relative; overflow: hidden;
+  grid-template-columns: 1fr auto; align-items: center; column-gap: 12px;
+  padding: 20px 20px 30px; border-radius: 10px; box-shadow: var(--shadow);
+  background-image: radial-gradient(120% 140% at 100% 0%, rgba(255, 255, 255, 0.16), transparent 55%);
+}
+.plate-text { display: grid; gap: 2px; min-width: 0; }
+.plate h1 { font-size: 38px; text-shadow: 0 2px 0 rgba(0, 0, 0, 0.15); }
+.emblem { width: 78px; height: 78px; filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.25)); }
+.em-plate { fill: var(--on-signal); }
+.em-line { fill: none; stroke: var(--signal); stroke-width: 2.5; }
+.em-flame { fill: var(--signal); }
+.tape {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 12px;
+  background: repeating-linear-gradient(135deg, var(--tape-a) 0 12px, var(--tape-b) 12px 24px);
+}
+
+.panel, .cert { border-radius: 12px; box-shadow: var(--shadow); }
+.panel { border-color: transparent; }
+.group-label { display: flex; align-items: center; gap: 8px; }
+.group-label::before { content: ""; width: 4px; height: 14px; border-radius: 2px; background: var(--signal); }
+
+.btn { border-radius: 10px; transition: transform .12s ease, box-shadow .12s ease; }
+.btn-primary { box-shadow: 0 6px 16px -8px var(--ink); }
+.btn:active { transform: translateY(1px) scale(0.99); }
+.mode { border-radius: 10px; transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease; position: relative; padding-right: 40px; }
+.mode::after { content: "›"; position: absolute; right: 16px; top: 50%; transform: translateY(-52%); font-size: 26px; color: var(--muted); }
+.mode:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+
+/* 류 선택: 류마다 색 마름모 */
+.pick-btn { position: relative; border-radius: 10px; padding-top: 12px; transition: border-color .15s ease, background-color .15s ease, transform .15s ease; }
+.pick-btn:hover { border-color: var(--c, var(--ink)); }
+.pick-cls .pick-btn { border-top: 4px solid var(--c); }
+.pick-btn .dia {
+  width: 22px; height: 22px; margin: 0 auto 4px; display: grid; place-items: center;
+  background: var(--c); transform: rotate(45deg); border-radius: 3px; font-style: normal;
+}
+.pick-btn .dia em { transform: rotate(-45deg); font-style: normal; font-family: var(--font-num); font-size: 12px; color: var(--card); }
+.pick-cls .pick-btn[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--c) 14%, var(--card)); color: var(--ink);
+  border-color: var(--c); box-shadow: 0 0 0 2px var(--c) inset;
+}
+.pick-cls .pick-btn[aria-pressed="true"] span { color: var(--ink); }
+.pick-lv .pick-btn[aria-pressed="true"] { box-shadow: 0 6px 16px -8px var(--ink); }
+
+/* 문제 화면 */
+.cls-chip { display: inline-flex; align-items: center; gap: 6px; }
+.cls-chip i { width: 9px; height: 9px; background: var(--c); transform: rotate(45deg); border-radius: 1px; }
+.bar { height: 8px; border-radius: 4px; }
+.bar i {
+  border-radius: 4px;
+  background: repeating-linear-gradient(135deg, var(--signal) 0 10px, color-mix(in srgb, var(--signal) 78%, var(--card)) 10px 20px);
+}
+.question { font-size: 20px; }
+.choice { border-radius: 10px; grid-template-columns: 32px 1fr auto; transition: border-color .15s ease, transform .15s ease, background-color .15s ease; }
+.choice:hover:not(:disabled) { transform: translateX(2px); }
+.choice.correct::after, .choice.wrong::after { font-weight: 700; font-size: 18px; }
+.choice.correct::after { content: "✓"; color: var(--good); }
+.choice.wrong::after { content: "✕"; color: var(--bad); }
+.choice.wrong, .ox-btn.wrong, .sa input.wrong { animation: shake .35s ease; }
+.ox-btn { border-radius: 14px; transition: transform .15s ease, border-color .15s ease; }
+.ox-btn:hover:not(:disabled) { transform: translateY(-2px); }
+.ox-btn[data-v="O"]:not(:disabled) { color: var(--c3); }
+.ox-btn[data-v="X"]:not(:disabled) { color: var(--signal); }
+.feedback { border-radius: 10px; border-left-width: 6px; animation: rise .25s ease both; }
+
+/* 결과: 인증 카드 + 도장 */
+.cert { position: relative; overflow: hidden; padding-top: 28px; }
+.cert::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 8px;
+  background: repeating-linear-gradient(135deg, var(--tape-a) 0 10px, var(--tape-b) 10px 20px);
+}
+.stamp {
+  position: absolute; right: 18px; top: 58px; width: 96px; height: 96px; border-radius: 50%;
+  border: 4px solid var(--signal); display: grid; place-items: center; transform: rotate(-14deg);
+  box-shadow: 0 0 0 3px var(--card), 0 0 0 5px var(--signal) inset; opacity: 0.9;
+  animation: stamp .45s cubic-bezier(.2, 1.6, .4, 1) both .15s;
+}
+.stamp span { font-family: var(--font-display); font-size: 26px; color: var(--signal); letter-spacing: 0.02em; }
+.stamp.retry { border-color: var(--muted); box-shadow: 0 0 0 3px var(--card), 0 0 0 5px var(--muted) inset; }
+.stamp.retry span { color: var(--muted); font-size: 21px; }
+.score b { font-size: 72px; }
+
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes shake { 0%, 100% { transform: none; } 25% { transform: translateX(-5px); } 50% { transform: translateX(4px); } 75% { transform: translateX(-2px); } }
+@keyframes stamp { from { opacity: 0; transform: rotate(-14deg) scale(1.6); } to { opacity: .9; transform: rotate(-14deg) scale(1); } }
+
+@media (max-width: 380px) {
+  .plate h1 { font-size: 32px; }
+  .emblem { width: 62px; height: 62px; }
+  .stamp { width: 78px; height: 78px; top: 52px; }
+  .stamp span { font-size: 21px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bar i { transition: none; }
+  .feedback, .stamp, .choice.wrong, .ox-btn.wrong, .sa input.wrong { animation: none; }
+  .btn, .mode, .pick-btn, .choice, .ox-btn { transition: none; }
+}
 </style>
 
 <div class="wrap">
   <header class="plate">
-    <span class="eyebrow">경북전문대학교 소방안전공학과</span>
-    <h1>위험물 Quiz</h1>
-    <span class="sub">위험물기능사 필기 대비 연습문제</span>
+    <div class="plate-text">
+      <span class="eyebrow">경북전문대학교 소방안전공학과</span>
+      <h1>위험물 Quiz</h1>
+      <span class="sub">위험물기능사 필기 대비 연습</span>
+    </div>
+    <svg class="emblem" viewBox="0 0 100 100" aria-hidden="true">
+      <rect x="21" y="21" width="58" height="58" rx="5" transform="rotate(45 50 50)" class="em-plate"></rect>
+      <rect x="27" y="27" width="46" height="46" rx="3" transform="rotate(45 50 50)" class="em-line"></rect>
+      <path class="em-flame" d="M50 27c4 9 14 14 14 27a14 14 0 0 1-28 0c0-7 4-12 7-16 1 5 3 8 6 9-2-7-1-13 1-20z"></path>
+    </svg>
+    <span class="tape" aria-hidden="true"></span>
   </header>
 
   <main id="app" aria-live="polite"></main>
@@ -515,6 +638,18 @@ const UNIT_WORDS = {
 const PASS = 60;
 const app = document.getElementById("app");
 const KEY = "hazmat-quiz-v1";
+
+/* 구글 시트 연동: GitHub Pages 배포본에만 Apps Script 웹앱 주소를 넣는다. claude.ai 링크에서는 비워 둔다. */
+const REMOTE_URL = "";
+const ADMIN_KEY_STORE = "hazmat-quiz-admin-key";
+async function remoteCall(body) {
+  const res = await withTimeout(fetch(REMOTE_URL, { method: "POST", body: JSON.stringify(body) }), 20000);
+  const data = await res.json();
+  if (!data || !data.ok) { const err = new Error((data && data.error) || "error"); err.code = data && data.error; throw err; }
+  return data;
+}
+function getAdminKey() { try { return localStorage.getItem(ADMIN_KEY_STORE) || ""; } catch (e) { return ""; } }
+function setAdminKey(k) { try { k ? localStorage.setItem(ADMIN_KEY_STORE, k) : localStorage.removeItem(ADMIN_KEY_STORE); } catch (e) {} }
 const MODES = ["객관식", "단답식", "O/X", "종합", "오답 재도전", "제1류", "제2류", "제3류", "제4류", "제5류", "제6류"];
 const modeMatch = (mode, m) => mode === m || String(mode).startsWith(m + " ");
 const pick = { cls: 1, lv: "all" };
@@ -606,8 +741,39 @@ function paintAdminEntry() {
 }
 
 function route() {
-  if (location.hash === "#admin" && cap.owner) renderAdmin();
+  document.body.classList.toggle("is-admin", location.hash === "#admin" && (cap.owner || !!REMOTE_URL));
+  if (location.hash === "#admin" && cap.owner) { admin.remote = false; renderAdmin(); }
+  else if (location.hash === "#admin" && REMOTE_URL) { admin.remote = true; getAdminKey() ? renderAdmin() : renderAdminLogin(); }
   else { stopAdmin(); render(); }
+}
+
+/* 구글 시트 관리자: 관리자 키 입력 화면 */
+function renderAdminLogin(message) {
+  window.scrollTo({ top: 0 });
+  app.innerHTML = `
+    <section class="panel">
+      <div class="admin-head"><h2>관리자 모드</h2><a class="admin-link" href="#">퀴즈로 돌아가기</a></div>
+      <p class="muted">교수님께 받은 관리자 키를 입력하세요. 한 번 입력하면 이 브라우저에서는 다시 묻지 않습니다.</p>
+      <form id="key-form" class="sa" autocomplete="off">
+        <input id="admin-key" type="password" placeholder="관리자 키" aria-label="관리자 키">
+        <button class="btn btn-primary" type="submit">확인</button>
+      </form>
+      <p class="form-error" id="key-msg" ${message ? "" : "hidden"}>${esc(message || "")}</p>
+    </section>`;
+  const input = document.getElementById("admin-key"), msg = document.getElementById("key-msg");
+  input.focus();
+  document.getElementById("key-form").addEventListener("submit", async ev => {
+    ev.preventDefault();
+    const k = input.value.trim();
+    if (!k) { msg.hidden = false; msg.textContent = "관리자 키를 입력하세요."; return; }
+    msg.hidden = false; msg.textContent = "확인하는 중이에요…";
+    try {
+      await remoteCall({ action: "list", key: k });
+      setAdminKey(k); renderAdmin();
+    } catch (e) {
+      msg.textContent = e.code === "key" ? "관리자 키가 맞지 않아요. 다시 확인해 주세요." : "구글 시트에 연결하지 못했어요. 인터넷 연결을 확인하고 다시 시도해 주세요.";
+    }
+  });
 }
 
 function startQuiz(order, mode) {
@@ -644,7 +810,7 @@ function renderStart() {
       <div class="group">
         <span class="group-label">류별 · 난이도별 연습</span>
         <div class="pick pick-cls" role="group" aria-label="류 선택">
-          ${[1, 2, 3, 4, 5, 6].map(c => `<button class="pick-btn" data-cls="${c}" aria-pressed="${pick.cls === c}"><b>제${c}류</b><span>${CLS_NAME[c]}</span></button>`).join("")}
+          ${[1, 2, 3, 4, 5, 6].map(c => `<button class="pick-btn" data-cls="${c}" style="--c:var(--c${c})" aria-pressed="${pick.cls === c}"><i class="dia" aria-hidden="true"><em>${c}</em></i><b>제${c}류</b><span>${CLS_NAME[c]}</span></button>`).join("")}
         </div>
         <div class="pick pick-lv" role="group" aria-label="난이도 선택">
           ${["all", "A", "B", "C"].map(l => `<button class="pick-btn" data-lv="${l}" aria-pressed="${pick.lv === l}"><b>${l === "all" ? "전체" : l}</b><span>${l === "all" ? "섞어서" : LV_NAME[l]}</span></button>`).join("")}
@@ -754,7 +920,7 @@ function renderQuiz() {
     <section class="panel">
       <div style="display:grid;gap:8px">
         <div class="progress-head"><span class="count">${state.idx + 1} / ${total}</span>
-          <span class="chips"><span class="chip">${TYPE_NAME[item.type]}</span><span class="chip quiet">${clsLabel(item)} · 난이도 ${item.lv}</span></span></div>
+          <span class="chips"><span class="chip">${TYPE_NAME[item.type]}</span><span class="chip quiet cls-chip" style="--c:var(--c${item.cls || 4})"><i aria-hidden="true"></i>${clsLabel(item)} · 난이도 ${item.lv}</span></span></div>
         <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${state.idx + (answered ? 1 : 0)}"><i style="width:${pct}%"></i></div>
       </div>
       <p class="question">${esc(item.q)}</p>
@@ -815,6 +981,15 @@ async function submitAttempt(rec) {
       return;
     } catch (e) {}
   }
+  if (REMOTE_URL) {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        await remoteCall({ action: "submit", record: { ...rec, ...scoreOf(rec) } });
+        if (state.rec === rec) { state.submit = "done"; paintSubmit(); }
+        return;
+      } catch (e) { await new Promise(r => setTimeout(r, 1500)); }
+    }
+  }
   if (state.rec === rec) { state.submit = "code"; paintSubmit(); }
 }
 
@@ -871,6 +1046,7 @@ function renderResult() {
 
   app.innerHTML = `
     <section class="cert" aria-label="결과">
+      <div class="stamp ${pass ? "" : "retry"}" aria-hidden="true"><span>${pass ? "합격" : "재도전"}</span></div>
       <div class="cert-top"><span>위험물 Quiz 결과</span><span>${date}</span></div>
       ${state.sid || state.name ? `<p class="name"><span class="sid">${esc(state.sid || "")}</span>${esc(state.name || "")}</p>` : ""}
       <div class="score"><b>${score}</b><span>점</span></div>
@@ -897,15 +1073,34 @@ function renderResult() {
 }
 
 /* ---------- 관리자 모드 (퀴즈 주인 계정에서만) ---------- */
-const admin = { subs: [], auto: [], imp: [], loaded: false, slow: false, error: "", mode: "all", q: "", open: null, del: null, timer: null };
+const admin = { subs: [], auto: [], imp: [], loaded: false, slow: false, error: "", mode: "all", q: "", open: null, del: null, timer: null, remote: false, started: false };
 
 function stopAdmin() {
   admin.subs.forEach(u => { try { u(); } catch (e) {} });
   admin.subs = [];
+  admin.started = false;
   clearTimeout(admin.timer);
 }
 
+/* 구글 시트에서 제출 기록 불러오기 */
+async function loadRemote() {
+  admin.started = true; admin.loaded = false; admin.slow = false; admin.error = "";
+  paintAdmin();
+  try {
+    const data = await remoteCall({ action: "list", key: getAdminKey() });
+    admin.auto = (data.rows || []).map(r => ({ ...r, src: r.src === "code" ? "code" : "auto", doc: "sheet" }));
+    admin.imp = [];
+    admin.loaded = true;
+  } catch (e) {
+    if (e.code === "key") { setAdminKey(""); renderAdminLogin("관리자 키가 바뀌었어요. 다시 입력해 주세요."); return; }
+    admin.loaded = true;
+    admin.error = "구글 시트에서 기록을 불러오지 못했어요. '새로고침'을 눌러 다시 시도해 주세요.";
+  }
+  paintAdmin();
+}
+
 function startAdmin() {
+  if (admin.remote) { loadRemote(); return; }
   admin.loaded = false; admin.slow = false; admin.error = "";
   if (!cap.db) { admin.loaded = true; admin.error = "제출 기록 저장소에 연결할 수 없어요. 잠시 뒤 다시 열어주세요."; return; }
   admin.timer = setTimeout(() => { if (!admin.loaded) { admin.slow = true; paintAdmin(); } }, 10000);
@@ -951,7 +1146,7 @@ async function exportExcel() {
   const list = filterRows(allRows());
   if (!list.length) { msg.textContent = "내려받을 제출 기록이 없어요."; return; }
   if (!window.XLSX) { msg.textContent = "엑셀 변환 도구를 불러오지 못했어요. 페이지를 새로고침한 뒤 다시 눌러주세요."; return; }
-  if (!cap.downloads) { msg.textContent = "이 화면에서는 파일 저장을 쓸 수 없어요. claude.ai에서 퀴즈를 열어 다시 눌러주세요."; return; }
+  if (!cap.downloads && !admin.remote) { msg.textContent = "이 화면에서는 파일 저장을 쓸 수 없어요. claude.ai에서 퀴즈를 열어 다시 눌러주세요."; return; }
 
   const answerText = r => r.order.map((id, i) => {
     const it = BY_ID[id];
@@ -1067,6 +1262,14 @@ async function exportExcel() {
 
   const d = new Date(), p = n => String(n).padStart(2, "0");
   const filename = `위험물Quiz_제출기록_${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}.xlsx`;
+  if (admin.remote) {
+    const url = URL.createObjectURL(new Blob([buf], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }));
+    const a = document.createElement("a");
+    a.href = url; a.download = filename; document.body.appendChild(a); a.click();
+    setTimeout(() => { a.remove(); URL.revokeObjectURL(url); }, 5000);
+    msg.textContent = `제출 기록 ${list.length}건을 엑셀 파일로 내려받았어요.`;
+    return;
+  }
   msg.textContent = "저장 확인 창에서 저장을 눌러주세요.";
   try {
     await cap.downloads.save({ filename, data: buf });
@@ -1084,7 +1287,10 @@ function renderAdmin() {
   app.innerHTML = `
     <section class="panel">
       <div class="admin-head"><h2>관리자 모드</h2><a class="admin-link" href="#">퀴즈로 돌아가기</a></div>
-      <p class="muted">이 화면은 퀴즈를 만든 교수님 계정에서만 열립니다. 학생이 자동 제출한 결과와, 붙여넣은 제출 코드가 한 목록에 모입니다.</p>
+      ${admin.remote
+        ? `<p class="muted">학생이 제출한 결과는 교수님의 구글 스프레드시트에 저장되고, 이 화면에서 모아 봅니다. 붙여넣은 제출 코드도 같은 시트에 들어갑니다.</p>
+           <div class="detail-actions"><button class="btn" id="refresh-btn">새로고침</button><button class="btn" id="logout-btn">관리자 키 지우기</button></div>`
+        : `<p class="muted">이 화면은 퀴즈를 만든 교수님 계정에서만 열립니다. 학생이 자동 제출한 결과와, 붙여넣은 제출 코드가 한 목록에 모입니다.</p>`}
     </section>
     <section class="panel">
       <h2>제출 코드 추가</h2>
@@ -1120,7 +1326,11 @@ function renderAdmin() {
   document.getElementById("f-mode").onchange = e => { admin.mode = e.target.value; admin.open = null; paintAdmin(); };
   document.getElementById("f-q").oninput = e => { admin.q = e.target.value; paintAdmin(); };
   document.getElementById("admin-list").onclick = onAdminClick;
-  if (!admin.subs.length) startAdmin();
+  if (admin.remote) {
+    document.getElementById("refresh-btn").onclick = loadRemote;
+    document.getElementById("logout-btn").onclick = () => { setAdminKey(""); stopAdmin(); renderAdminLogin(); };
+  }
+  if (admin.remote ? !admin.started : !admin.subs.length) startAdmin();
   paintAdmin();
 }
 
@@ -1213,7 +1423,16 @@ function onAdminClick(e) {
 
 async function deleteRow(key) {
   const r = allRows().find(x => x.key === key);
-  if (!r || !cap.db) return;
+  if (!r) return;
+  if (admin.remote) {
+    try {
+      await remoteCall({ action: "delete", key: getAdminKey(), sid: r.sid, t: r.t });
+      admin.open = null; admin.del = null;
+      await loadRemote();
+    } catch (e) { admin.error = "삭제하지 못했어요. 잠시 뒤 다시 시도해 주세요."; paintAdmin(); }
+    return;
+  }
+  if (!cap.db) return;
   try {
     if (r.src === "code") {
       await cap.db.doc("imports/" + r.doc).delete();
@@ -1235,6 +1454,25 @@ async function importCodes() {
   const ta = document.getElementById("import-codes"), msg = document.getElementById("import-msg");
   const parts = ta.value.split(/\s+/).filter(Boolean);
   if (!parts.length) { msg.textContent = "붙여넣은 코드가 없어요."; return; }
+  if (admin.remote) {
+    const recs = [];
+    let bad = 0;
+    for (const p of parts) { const rec = decodeAttempt(p); rec ? recs.push(rec) : bad++; }
+    let added = 0, dup = 0;
+    if (recs.length) {
+      msg.textContent = "구글 시트에 추가하는 중이에요…";
+      try {
+        const res = await remoteCall({ action: "import", key: getAdminKey(), records: recs.map(r => ({ ...r, ...scoreOf(r) })) });
+        added = res.added || 0; dup = res.dup || 0; bad += res.bad || 0;
+      } catch (e) { msg.textContent = "구글 시트에 추가하지 못했어요. 잠시 뒤 다시 시도해 주세요."; return; }
+    }
+    msg.textContent = `${added}건 추가했어요.` +
+      (dup ? ` 이미 있는 기록 ${dup}건은 건너뛰었어요.` : "") +
+      (bad ? ` 읽을 수 없는 코드 ${bad}건이 있어요. 코드가 잘리지 않았는지 확인해 주세요.` : "");
+    if (added && !bad) ta.value = "";
+    if (added) loadRemote();
+    return;
+  }
   if (!cap.db) { msg.textContent = "저장소에 연결할 수 없어 추가하지 못했어요. 잠시 뒤 다시 시도해 주세요."; return; }
   const existing = new Set(allRows().map(r => r.sid + "|" + r.t));
   let added = 0, dup = 0, bad = 0;
