@@ -1,0 +1,1268 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="경북전문대학교 소방안전공학과 위험물기능사 필기 대비 퀴즈">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<title>위험물 Quiz</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one narrow column like a phone screen; a red hazard plate heads the page, one question at a time below it. */
+:root {
+  --paper: #F4F6F9;
+  --card: #FFFFFF;
+  --ink: #14213D;
+  --muted: #5A6378;
+  --line: #D9DEE7;
+  --signal: #C8102E;
+  --on-signal: #FFFFFF;
+  --good: #17784A;
+  --good-bg: #E5F3EB;
+  --bad: #B42318;
+  --bad-bg: #FCEBE9;
+  --focus: #2F6FEB;
+  --font-display: "Black Han Sans", "IBM Plex Sans KR", "Malgun Gothic", sans-serif;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-num: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0E1420; --card: #162033; --ink: #E7EBF3; --muted: #9AA3B7; --line: #2A3550;
+    --signal: #E63A50; --on-signal: #FFFFFF; --good: #4CC38A; --good-bg: #12301F;
+    --bad: #FF7B6E; --bad-bg: #3A1A1A; --focus: #7AA5FF; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0E1420; --card: #162033; --ink: #E7EBF3; --muted: #9AA3B7; --line: #2A3550;
+  --signal: #E63A50; --on-signal: #FFFFFF; --good: #4CC38A; --good-bg: #12301F;
+  --bad: #FF7B6E; --bad-bg: #3A1A1A; --focus: #7AA5FF; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 40px;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 560px; margin: 0 auto; display: grid; gap: 20px; }
+
+/* Header plate */
+.plate {
+  background: var(--signal);
+  color: var(--on-signal);
+  border-radius: 6px;
+  padding: 18px 20px 16px;
+  display: grid;
+  gap: 2px;
+}
+.plate .eyebrow { font-size: 13px; letter-spacing: 0.04em; opacity: 0.9; }
+.plate h1 { font-family: var(--font-display); font-weight: 400; font-size: 34px; line-height: 1.15; margin: 0; letter-spacing: 0.01em; }
+.plate .sub { font-size: 14px; opacity: 0.92; }
+
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 20px; display: grid; gap: 16px; }
+h2 { font-size: 18px; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+.muted { color: var(--muted); font-size: 14px; }
+
+/* Buttons */
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible, input:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.btn {
+  min-height: 52px; border-radius: 6px; padding: 12px 18px; font-weight: 700; font-size: 16px;
+  border: 1.5px solid var(--ink); background: transparent; color: var(--ink);
+}
+.btn-primary { background: var(--ink); color: var(--paper); }
+.btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 380px) { .btn-row { grid-template-columns: 1fr; } }
+
+/* Start screen */
+.modes { display: grid; gap: 10px; }
+.mode {
+  text-align: left; border: 1.5px solid var(--line); background: var(--card); border-radius: 6px;
+  padding: 14px 16px; display: grid; gap: 2px;
+}
+.mode strong { font-size: 17px; }
+.mode span { color: var(--muted); font-size: 14px; }
+.mode:hover { border-color: var(--ink); }
+.field { display: grid; gap: 6px; }
+.field label { font-size: 14px; font-weight: 500; }
+.field input {
+  font: inherit; min-height: 48px; padding: 10px 12px; border-radius: 6px;
+  border: 1.5px solid var(--line); background: var(--paper); color: var(--ink);
+}
+.classes { display: flex; flex-wrap: wrap; gap: 6px; }
+.classes span { font-size: 13px; border: 1px solid var(--line); border-radius: 4px; padding: 2px 8px; color: var(--muted); }
+.classes b { color: var(--ink); font-weight: 700; }
+
+/* Question screen */
+.progress-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.count { font-family: var(--font-num); font-size: 15px; font-variant-numeric: tabular-nums; }
+.bar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--signal); transition: width .25s ease; }
+.chip { font-size: 13px; font-weight: 700; border: 1.5px solid var(--ink); border-radius: 4px; padding: 1px 8px; white-space: nowrap; }
+.question { font-size: 19px; font-weight: 700; line-height: 1.5; text-wrap: pretty; }
+.choices { display: grid; gap: 10px; }
+.choice {
+  display: grid; grid-template-columns: 32px 1fr; align-items: center; gap: 8px; text-align: left;
+  min-height: 56px; padding: 10px 14px; border-radius: 6px; border: 1.5px solid var(--line); background: var(--card);
+}
+.choice:hover:not(:disabled) { border-color: var(--ink); }
+.choice .num { font-family: var(--font-num); font-size: 15px; color: var(--muted); }
+.choice:disabled { cursor: default; }
+.choice.correct { border-color: var(--good); background: var(--good-bg); }
+.choice.correct .num { color: var(--good); }
+.choice.wrong { border-color: var(--bad); background: var(--bad-bg); }
+.choice.wrong .num { color: var(--bad); }
+.feedback { border-radius: 6px; padding: 14px 16px; display: grid; gap: 4px; border: 1.5px solid; }
+.feedback.ok { border-color: var(--good); background: var(--good-bg); }
+.feedback.no { border-color: var(--bad); background: var(--bad-bg); }
+.feedback .verdict { font-weight: 700; }
+.feedback.ok .verdict { color: var(--good); }
+.feedback.no .verdict { color: var(--bad); }
+
+/* Result */
+.cert { border: 2px solid var(--ink); border-radius: 6px; padding: 20px; display: grid; gap: 10px; background: var(--card); }
+.cert-top { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 14px; color: var(--muted); }
+.score { display: flex; align-items: baseline; gap: 6px; }
+.score b { font-family: var(--font-display); font-weight: 400; font-size: 64px; line-height: 1; }
+.score span { font-size: 20px; font-weight: 700; }
+.verdict-pill { justify-self: start; font-weight: 700; font-size: 15px; padding: 4px 12px; border-radius: 999px; }
+.verdict-pill.pass { background: var(--good-bg); color: var(--good); }
+.verdict-pill.fail { background: var(--bad-bg); color: var(--bad); }
+.cert .name { font-size: 18px; font-weight: 700; }
+.review { display: grid; gap: 12px; }
+.review-item { border-top: 1px solid var(--line); padding-top: 12px; display: grid; gap: 6px; }
+.review-item .q { font-weight: 700; }
+.review-item .a { color: var(--good); font-weight: 500; }
+.review-item .mine { color: var(--bad); font-size: 14px; }
+.foot { text-align: center; color: var(--muted); font-size: 13px; }
+
+/* Mode groups */
+.group { display: grid; gap: 8px; }
+.group-label { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; color: var(--muted); }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip.quiet { border-color: var(--line); color: var(--muted); font-weight: 500; }
+
+/* O/X */
+.ox { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ox-btn {
+  min-height: 112px; border-radius: 6px; border: 1.5px solid var(--line); background: var(--card);
+  font-family: var(--font-display); font-size: 56px; line-height: 1; display: grid; place-items: center;
+}
+.ox-btn:hover:not(:disabled) { border-color: var(--ink); }
+.ox-btn:disabled { cursor: default; }
+.ox-btn.correct { border-color: var(--good); background: var(--good-bg); color: var(--good); }
+.ox-btn.wrong { border-color: var(--bad); background: var(--bad-bg); color: var(--bad); }
+
+/* Short answer */
+.sa { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+.sa input {
+  font: inherit; font-size: 18px; min-height: 52px; padding: 10px 14px; border-radius: 6px; min-width: 0;
+  border: 1.5px solid var(--line); background: var(--paper); color: var(--ink);
+}
+.sa input.correct { border-color: var(--good); background: var(--good-bg); }
+.sa input.wrong { border-color: var(--bad); background: var(--bad-bg); }
+.sa .btn { min-width: 84px; }
+.sa.done { grid-template-columns: 1fr; }
+
+/* Student ID + name */
+.who { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.who .field { min-width: 0; }
+.who input { width: 100%; }
+@media (max-width: 380px) { .who { grid-template-columns: 1fr; } }
+.field input.missing { border-color: var(--bad); }
+.form-error { color: var(--bad); font-size: 14px; font-weight: 500; }
+.cert .sid, .detail .sid { font-family: var(--font-num); font-weight: 500; font-variant-numeric: tabular-nums; margin-right: 6px; }
+
+/* Submission */
+.foot { display: grid; gap: 6px; justify-items: center; }
+.admin-link { color: var(--ink); font-weight: 700; font-size: 14px; text-underline-offset: 3px; }
+.code {
+  width: 100%; font-family: var(--font-num); font-size: 13px; line-height: 1.5; padding: 10px 12px;
+  border-radius: 6px; border: 1.5px solid var(--line); background: var(--paper); color: var(--ink);
+  resize: vertical; word-break: break-all;
+}
+.submit-ok { color: var(--good); font-weight: 700; }
+
+/* Admin */
+.admin-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.filters { display: grid; grid-template-columns: 160px 1fr; gap: 10px; }
+@media (max-width: 480px) { .filters { grid-template-columns: 1fr; } }
+.field select, .field input[type="search"] {
+  font: inherit; min-height: 48px; padding: 10px 12px; border-radius: 6px; width: 100%; min-width: 0;
+  border: 1.5px solid var(--line); background: var(--paper); color: var(--ink);
+}
+.admin-list { display: grid; gap: 14px; min-width: 0; }
+.export-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+#app > .panel + .panel { margin-top: 16px; }
+.export-row .btn { min-height: 44px; }
+
+/* 류·난이도 선택 */
+.pick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.pick-lv { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 380px) { .pick-lv { grid-template-columns: repeat(2, 1fr); } }
+.pick-btn {
+  border: 1.5px solid var(--line); background: var(--card); border-radius: 6px; padding: 8px 6px;
+  display: grid; gap: 0; text-align: center; min-height: 56px; align-content: center; min-width: 0;
+}
+.pick-btn b { font-size: 16px; }
+.pick-btn span { font-size: 12px; color: var(--muted); line-height: 1.35; }
+.pick-btn:hover { border-color: var(--ink); }
+.pick-btn[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+.pick-btn[aria-pressed="true"] span { color: var(--paper); }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.stats div { border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; display: grid; }
+.stats span { font-size: 13px; color: var(--muted); }
+.stats b { font-family: var(--font-num); font-weight: 500; font-size: 20px; font-variant-numeric: tabular-nums; }
+.table-wrap { overflow-x: auto; }
+table.subs { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 620px; }
+.subs th { text-align: left; font-size: 13px; color: var(--muted); font-weight: 500; padding: 8px; border-bottom: 1.5px solid var(--line); white-space: nowrap; }
+.subs td { padding: 10px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.subs .num { text-align: right; font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+.subs tr.open td { background: var(--paper); }
+.mono { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+.score-pill { display: inline-block; min-width: 40px; text-align: center; padding: 1px 8px; border-radius: 999px; font-weight: 500; }
+.score-pill.pass { background: var(--good-bg); color: var(--good); }
+.score-pill.fail { background: var(--bad-bg); color: var(--bad); }
+.link-btn { background: none; border: none; padding: 4px 0; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; color: var(--ink); }
+.detail { border: 2px solid var(--ink); border-radius: 6px; padding: 16px; display: grid; gap: 10px; }
+.detail-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+.detail .name { font-size: 18px; font-weight: 700; }
+.score.small b { font-size: 40px; }
+.ans-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.ans { border-left: 4px solid var(--good); padding: 4px 0 4px 12px; display: grid; gap: 4px; }
+.ans.no { border-left-color: var(--bad); }
+.ans-head { display: flex; gap: 8px; align-items: center; }
+.ans-mark { font-size: 13px; font-weight: 700; }
+.ans.ok .ans-mark { color: var(--good); }
+.ans.no .ans-mark { color: var(--bad); }
+.ans .q { font-weight: 700; }
+.detail-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.detail-actions .btn { min-height: 44px; }
+.btn-danger { background: var(--bad); border-color: var(--bad); color: var(--card); }
+.hint { font-size: 14px; color: var(--muted); }
+
+/* Result breakdown */
+.breakdown { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.breakdown div { border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; display: grid; gap: 0; }
+.breakdown span { font-size: 13px; color: var(--muted); }
+.breakdown b { font-family: var(--font-num); font-weight: 500; font-size: 16px; font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) { .bar i { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header class="plate">
+    <span class="eyebrow">경북전문대학교 소방안전공학과</span>
+    <h1>위험물 Quiz</h1>
+    <span class="sub">위험물기능사 필기 대비 연습문제</span>
+  </header>
+
+  <main id="app" aria-live="polite"></main>
+
+  <div class="foot">
+    <span>퀴즈를 마치면 학번, 이름, 답안이 교수님께 제출됩니다.</span>
+    <span id="admin-entry"></span>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+const QUESTIONS = [
+  { tag: "유별", q: "제4류 위험물의 성질은?", c: ["산화성 고체", "가연성 고체", "인화성 액체", "자기반응성 물질"], a: 3,
+    e: "제1류 산화성 고체, 제2류 가연성 고체, 제3류 자연발화성 및 금수성 물질, 제4류 인화성 액체, 제5류 자기반응성 물질, 제6류 산화성 액체다." },
+  { tag: "유별", q: "제6류 위험물의 성질은?", c: ["산화성 액체", "인화성 액체", "산화성 고체", "가연성 고체"], a: 1,
+    e: "제6류 위험물은 산화성 액체다. 과염소산, 과산화수소, 질산이 해당한다." },
+  { tag: "유별", q: "제3류 위험물의 성질은?", c: ["자기반응성 물질", "자연발화성 및 금수성 물질", "산화성 액체", "인화성 액체"], a: 2,
+    e: "제3류 위험물은 자연발화성 및 금수성 물질이다. 칼륨, 나트륨, 황린 등이 해당한다." },
+  { tag: "유별", q: "제5류 위험물의 성질은?", c: ["산화성 고체", "자기반응성 물질", "인화성 액체", "산화성 액체"], a: 2,
+    e: "제5류 위험물은 자기반응성 물질이다. 분자 안에 산소를 갖고 있어 외부 산소 없이도 연소할 수 있다." },
+  { tag: "제2류", q: "다음 중 제2류 위험물(가연성 고체)에 해당하는 것은?", c: ["적린", "황린", "칼륨", "질산"], a: 1,
+    e: "적린은 제2류 위험물이다. 황린과 칼륨은 제3류, 질산은 제6류 위험물이다." },
+  { tag: "제4류", q: "휘발유(제1석유류, 비수용성)의 지정수량은?", c: ["50L", "200L", "400L", "1,000L"], a: 2,
+    e: "제1석유류 비수용성액체의 지정수량은 200L, 수용성액체는 400L다." },
+  { tag: "제4류", q: "제4류 위험물 중 특수인화물의 지정수량은?", c: ["50L", "100L", "200L", "400L"], a: 1,
+    e: "특수인화물의 지정수량은 50L다. 디에틸에테르, 이황화탄소 등이 해당한다." },
+  { tag: "제4류", q: "경유는 제4류 위험물 중 어디에 속하는가?", c: ["제1석유류", "제2석유류", "제3석유류", "제4석유류"], a: 2,
+    e: "경유와 등유는 제2석유류다. 비수용성 제2석유류의 지정수량은 1,000L다." },
+  { tag: "제4류", q: "제4류 위험물 중 알코올류의 지정수량은?", c: ["200L", "400L", "1,000L", "2,000L"], a: 2,
+    e: "알코올류의 지정수량은 400L다." },
+  { tag: "제4류", q: "제1석유류는 1기압에서 인화점이 몇 ℃ 미만인 것인가?", c: ["0℃", "21℃", "70℃", "200℃"], a: 2,
+    e: "제1석유류는 인화점 21℃ 미만, 제2석유류는 21℃ 이상 70℃ 미만, 제3석유류는 70℃ 이상 200℃ 미만이다." },
+  { tag: "제4류", q: "동식물유류의 지정수량은?", c: ["2,000L", "4,000L", "6,000L", "10,000L"], a: 4,
+    e: "동식물유류의 지정수량은 10,000L다. 제4석유류는 6,000L다." },
+  { tag: "계산", q: "휘발유 400L와 경유 1,000L를 함께 저장할 때 지정수량 배수의 합은? (둘 다 비수용성)", c: ["1.5배", "2배", "3배", "4배"], a: 3,
+    e: "휘발유 400L ÷ 200L = 2배, 경유 1,000L ÷ 1,000L = 1배이므로 합은 3배다." },
+  { tag: "저장", q: "칼륨과 나트륨을 저장할 때 사용하는 보호액은?", c: ["물", "석유(등유)", "알코올", "이산화탄소"], a: 2,
+    e: "칼륨과 나트륨은 물과 반응해 수소를 발생하므로 석유(등유) 속에 저장해 공기와 수분을 차단한다." },
+  { tag: "저장", q: "황린을 저장할 때 사용하는 보호액은?", c: ["물", "석유(등유)", "에탄올", "벤젠"], a: 1,
+    e: "황린은 공기 중에서 자연발화하므로 물속에 저장한다." },
+  { tag: "저장", q: "이황화탄소를 저장할 때 가연성 증기의 발생을 막기 위한 방법은?", c: ["석유 속에 저장", "물속에 저장", "알코올 속에 저장", "밀폐 없이 통풍 저장"], a: 2,
+    e: "이황화탄소는 물보다 무겁고 물에 녹지 않으므로 물속에 저장해 가연성 증기 발생을 막는다." },
+  { tag: "성질", q: "탄화칼슘이 물과 반응하여 생성되는 가연성 가스는?", c: ["메탄", "수소", "아세틸렌", "포스핀"], a: 3,
+    e: "탄화칼슘(CaC₂)은 물과 반응하여 아세틸렌(C₂H₂)을 생성한다." },
+  { tag: "제6류", q: "과산화수소는 농도가 몇 중량퍼센트 이상인 것을 위험물로 보는가?", c: ["10", "25", "36", "49"], a: 3,
+    e: "과산화수소는 농도 36중량퍼센트 이상인 것이 위험물이다. 질산은 비중 1.49 이상인 것이 위험물이다." },
+  { tag: "소화", q: "제4류 위험물 화재에 적응성이 가장 낮은 소화방법은?", c: ["포소화약제 방사", "이산화탄소 방사", "분말소화약제 방사", "봉상수(물줄기) 주수"], a: 4,
+    e: "제4류 위험물은 대부분 물보다 가벼워 물줄기로 주수하면 기름이 물 위에 떠서 화재가 넓게 번질 수 있다. 질식소화(포, CO₂, 분말)가 적합하다." },
+  { tag: "운반", q: "제4류 위험물 운반용기 외부에 표시해야 하는 주의사항은?", c: ["물기엄금", "화기엄금", "충격주의", "가연물접촉주의"], a: 2,
+    e: "제4류 위험물은 '화기엄금'을 표시한다. 물기엄금은 금수성 물질, 가연물접촉주의는 제6류 등에 쓰인다." },
+  { tag: "법령", q: "위험물안전관리자가 해임되거나 퇴직한 경우, 그날부터 며칠 이내에 다시 안전관리자를 선임해야 하는가?", c: ["14일", "30일", "60일", "90일"], a: 2,
+    e: "해임·퇴직한 날부터 30일 이내에 다시 선임하고, 선임한 날부터 14일 이내에 소방본부장 또는 소방서장에게 신고한다." },
+
+  /* ----- 류별 추가 문제 (cls: 류, lv: 난이도 A 기초 · B 중급 · C 심화) ----- */
+  { cls: 1, lv: "A", tag: "성질", q: "흑색화약의 원료로 쓰이는 제1류 위험물은?", c: ["질산칼륨", "과염소산칼륨", "과산화바륨", "염소산나트륨"], a: 1,
+    e: "흑색화약은 질산칼륨, 황, 숯(목탄)을 섞어 만든다. 질산칼륨은 제1류 위험물 중 질산염류다." },
+  { cls: 1, lv: "B", tag: "지정수량", q: "제1류 위험물 중 지정수량이 50kg인 것은?", c: ["질산염류", "과망가니즈산염류", "염소산염류", "다이크로뮴산염류"], a: 3,
+    e: "아염소산염류·염소산염류·과염소산염류·무기과산화물은 50kg, 브로민산염류·질산염류·아이오딘산염류는 300kg, 과망가니즈산염류·다이크로뮴산염류는 1,000kg이다." },
+  { cls: 1, lv: "B", tag: "소화", q: "제1류 위험물(알칼리금속의 과산화물 제외) 화재의 일반적인 소화방법은?", c: ["다량의 물로 냉각소화", "이산화탄소로 질식소화", "할론으로 억제소화", "포로 덮어 질식소화"], a: 1,
+    e: "제1류는 가열되면 스스로 산소를 내놓는 산화제라 질식소화 효과가 작다. 다량의 물로 분해온도 아래까지 냉각한다. 단, 알칼리금속의 과산화물은 주수를 금지한다." },
+  { cls: 1, lv: "C", tag: "성질", q: "과산화나트륨이 물과 반응할 때 발생하는 가스는?", c: ["수소", "산소", "메탄", "아세틸렌"], a: 2,
+    e: "2Na₂O₂ + 2H₂O → 4NaOH + O₂. 열과 함께 산소가 발생해 연소를 돕기 때문에 물과의 접촉을 피한다." },
+  { cls: 1, lv: "C", tag: "소화", q: "알칼리금속의 과산화물 화재에 적합한 소화방법은?", c: ["다량의 물로 주수", "건조사로 덮어 소화", "포소화약제 방사", "강화액 방사"], a: 2,
+    e: "알칼리금속의 과산화물은 물과 반응해 산소와 열을 내므로 주수를 금지한다. 건조사, 팽창질석·팽창진주암, 탄산수소염류 분말로 소화한다." },
+
+  { cls: 2, lv: "A", tag: "유별", q: "다음 중 제2류 위험물이 아닌 것은?", c: ["황", "철분", "마그네슘", "황린"], a: 4,
+    e: "황린은 제3류 위험물(자연발화성 물질)이다. 황, 철분, 마그네슘은 제2류 위험물(가연성 고체)이다." },
+  { cls: 2, lv: "B", tag: "지정수량", q: "제2류 위험물 중 지정수량이 500kg인 것은?", c: ["황화인", "적린", "마그네슘", "인화성 고체"], a: 3,
+    e: "황화인·적린·황은 100kg, 철분·금속분·마그네슘은 500kg, 인화성 고체는 1,000kg이다." },
+  { cls: 2, lv: "B", tag: "정의", q: "인화성 고체는 1기압에서 인화점이 몇 ℃ 미만인 고체인가?", c: ["21℃", "40℃", "70℃", "100℃"], a: 2,
+    e: "인화성 고체는 고형알코올 그 밖에 1기압에서 인화점이 40℃ 미만인 고체다." },
+  { cls: 2, lv: "C", tag: "성질", q: "적린이 연소할 때 생성되는 흰 연기의 주성분은?", c: ["오산화인", "이산화황", "황화수소", "포스핀"], a: 1,
+    e: "적린(P)이 연소하면 흰 연기인 오산화인(P₂O₅)이 생긴다." },
+  { cls: 2, lv: "C", tag: "성질", q: "오황화인이 물과 반응할 때 발생하는 유독성 가스는?", c: ["황화수소", "이산화황", "포스핀", "수소"], a: 1,
+    e: "오황화인(P₂S₅)은 물과 반응해 유독한 황화수소(H₂S)와 인산을 생성한다." },
+  { cls: 2, lv: "C", tag: "운반", q: "철분·금속분·마그네슘의 운반용기 외부에 표시하는 주의사항은?", c: ["화기엄금", "화기주의 및 물기엄금", "가연물접촉주의", "화기엄금 및 충격주의"], a: 2,
+    e: "철분·금속분·마그네슘은 '화기주의'와 '물기엄금', 인화성 고체는 '화기엄금', 그 밖의 제2류는 '화기주의'를 표시한다." },
+
+  { cls: 3, lv: "B", tag: "지정수량", q: "제3류 위험물 중 황린의 지정수량은?", c: ["10kg", "20kg", "50kg", "300kg"], a: 2,
+    e: "칼륨·나트륨·알킬알루미늄·알킬리튬은 10kg, 황린은 20kg, 알칼리금속·알칼리토금속·유기금속화합물은 50kg, 금속의 수소화물·인화물, 칼슘 또는 알루미늄의 탄화물은 300kg이다." },
+  { cls: 3, lv: "C", tag: "성질", q: "인화칼슘(Ca₃P₂)이 물과 반응하여 발생하는 유독성 가스는?", c: ["포스핀", "아세틸렌", "메탄", "황화수소"], a: 1,
+    e: "인화칼슘은 물과 반응해 유독성 가연성 가스인 포스핀(PH₃)을 발생한다." },
+  { cls: 3, lv: "C", tag: "성질", q: "탄화알루미늄이 물과 반응하여 발생하는 가연성 가스는?", c: ["아세틸렌", "메탄", "수소", "에탄"], a: 2,
+    e: "탄화알루미늄(Al₄C₃)은 물과 반응해 메탄(CH₄)을 발생한다. 탄화칼슘이 아세틸렌을 내는 것과 구별해서 외운다." },
+
+  { cls: 5, lv: "A", tag: "품명", q: "다이너마이트의 원료로 쓰이는 질산에스터류 위험물은?", c: ["나이트로글리세린", "트라이나이트로톨루엔", "과산화벤조일", "피크린산"], a: 1,
+    e: "나이트로글리세린은 질산에스터류로, 다이너마이트의 원료다. 충격·마찰에 매우 민감하다." },
+  { cls: 5, lv: "B", tag: "품명", q: "트라이나이트로톨루엔(TNT)은 제5류 위험물 중 어디에 속하는가?", c: ["유기과산화물", "질산에스터류", "나이트로화합물", "아조화합물"], a: 3,
+    e: "TNT와 피크린산(트라이나이트로페놀)은 나이트로화합물이다." },
+  { cls: 5, lv: "B", tag: "품명", q: "과산화벤조일은 제5류 위험물 중 어디에 속하는가?", c: ["유기과산화물", "질산에스터류", "나이트로화합물", "하이드라진 유도체"], a: 1,
+    e: "과산화벤조일은 유기과산화물이다. 메틸에틸케톤퍼옥사이드도 유기과산화물에 속한다." },
+  { cls: 5, lv: "C", tag: "저장", q: "나이트로셀룰로오스를 안전하게 저장하는 방법은?", c: ["건조한 상태로 밀봉 저장", "물이나 알코올로 적셔 저장", "석유 속에 저장", "햇빛이 드는 곳에 저장"], a: 2,
+    e: "나이트로셀룰로오스는 건조하면 충격·마찰에 민감해지므로 물이나 알코올로 적셔(습면) 저장한다." },
+
+  { cls: 6, lv: "B", tag: "지정수량", q: "제6류 위험물인 과염소산, 과산화수소, 질산의 지정수량은?", c: ["50kg", "100kg", "300kg", "1,000kg"], a: 3,
+    e: "제6류 위험물(과염소산, 과산화수소, 질산, 할로젠간화합물)의 지정수량은 모두 300kg이다." },
+  { cls: 6, lv: "B", tag: "성질", q: "질산이 햇빛에 의해 분해될 때 발생하는 갈색의 유독한 가스는?", c: ["이산화질소", "일산화탄소", "염소", "암모니아"], a: 1,
+    e: "질산은 빛에 분해되어 갈색의 이산화질소(NO₂)를 낸다. 그래서 갈색병에 담아 차광 보관한다." },
+  { cls: 6, lv: "C", tag: "저장", q: "과산화수소 저장용기의 마개로 적합한 것은?", c: ["완전히 밀봉되는 마개", "가스가 빠지도록 구멍이 뚫린 마개", "고무 마개로 단단히 밀봉", "금속 마개"], a: 2,
+    e: "과산화수소는 조금씩 분해되며 산소를 내어 용기 압력이 오른다. 그래서 가스가 빠지는 구멍 뚫린 마개를 쓴다." }
+];
+
+const OX = [
+  { tag: "유별", q: "제1류 위험물은 산화성 고체이다.", a: "O",
+    e: "맞다. 제1류는 산화성 고체, 제6류는 산화성 액체다." },
+  { tag: "저장", q: "황린은 석유(등유) 속에 저장한다.", a: "X",
+    e: "틀리다. 황린은 공기 중에서 자연발화하므로 물속에 저장한다. 석유 속에 저장하는 것은 칼륨과 나트륨이다." },
+  { tag: "제4류", q: "제4류 위험물은 대부분 물보다 가볍고, 그 증기는 공기보다 무겁다.", a: "O",
+    e: "맞다. 그래서 증기가 낮은 곳에 체류하기 쉽고, 물을 뿌리면 기름이 물 위에 떠서 번질 수 있다." },
+  { tag: "제4류", q: "알코올류의 지정수량은 200L이다.", a: "X",
+    e: "틀리다. 알코올류의 지정수량은 400L다. 200L는 제1석유류 비수용성액체(휘발유 등)의 지정수량이다." },
+  { tag: "성질", q: "칼륨은 물과 반응하여 수소를 발생한다.", a: "O",
+    e: "맞다. 칼륨과 나트륨은 물과 반응해 가연성 가스인 수소를 발생하므로 물과의 접촉을 피해야 한다." },
+  { tag: "제6류", q: "제6류 위험물은 그 자체는 타지 않는 불연성 물질이다.", a: "O",
+    e: "맞다. 제6류 위험물(산화성 액체)은 자신은 불연성이지만, 다른 가연물의 연소를 돕는다." },
+  { tag: "제4류", q: "경유는 제1석유류에 속한다.", a: "X",
+    e: "틀리다. 경유와 등유는 제2석유류다. 휘발유와 아세톤이 제1석유류다." },
+  { tag: "소화", q: "제5류 위험물 화재에는 질식소화가 가장 효과적이다.", a: "X",
+    e: "틀리다. 제5류 위험물은 분자 안에 산소를 갖고 있어 질식소화 효과가 없다. 다량의 물로 냉각소화한다." },
+  { tag: "저장", q: "이황화탄소는 가연성 증기의 발생을 막기 위해 물속에 저장한다.", a: "O",
+    e: "맞다. 이황화탄소는 물보다 무겁고 물에 녹지 않아 물속에 저장할 수 있다." },
+  { tag: "제4류", q: "제2석유류는 1기압에서 인화점이 21℃ 이상 70℃ 미만인 것이다.", a: "O",
+    e: "맞다. 제1석유류 21℃ 미만, 제2석유류 21℃ 이상 70℃ 미만, 제3석유류 70℃ 이상 200℃ 미만이다." },
+
+  { cls: 1, lv: "A", tag: "성질", q: "제1류 위험물은 그 자체가 잘 타는 가연성 물질이다.", a: "X",
+    e: "틀리다. 제1류 위험물은 대부분 불연성이다. 산소를 많이 품은 강한 산화제라서 가열·충격을 받으면 산소를 내어 다른 물질의 연소를 돕는다." },
+  { cls: 1, lv: "B", tag: "지정수량", q: "과망가니즈산염류의 지정수량은 1,000kg이다.", a: "O",
+    e: "맞다. 과망가니즈산염류와 다이크로뮴산염류의 지정수량은 1,000kg이다." },
+  { cls: 1, lv: "C", tag: "운반", q: "알칼리금속의 과산화물 운반용기에는 '물기엄금'도 표시해야 한다.", a: "O",
+    e: "맞다. 알칼리금속의 과산화물은 '화기·충격주의', '물기엄금', '가연물접촉주의'를 표시한다. 그 밖의 제1류는 '화기·충격주의'와 '가연물접촉주의'를 표시한다." },
+
+  { cls: 2, lv: "A", tag: "저장", q: "제2류 위험물은 산화제와 섞이면 연소·폭발 위험이 커지므로 산화제와 함께 두지 않는다.", a: "O",
+    e: "맞다. 제2류 위험물은 가연성 고체라서 산화제(제1류, 제6류 등)와 접촉하면 쉽게 불이 붙거나 폭발할 수 있다." },
+  { cls: 2, lv: "B", tag: "지정수량", q: "황화인, 적린, 황의 지정수량은 모두 100kg이다.", a: "O",
+    e: "맞다. 황화인·적린·황은 100kg, 철분·금속분·마그네슘은 500kg, 인화성 고체는 1,000kg이다." },
+  { cls: 2, lv: "B", tag: "소화", q: "마그네슘 화재에는 다량의 물을 뿌려 냉각소화하는 것이 효과적이다.", a: "X",
+    e: "틀리다. 마그네슘은 물과 반응해 수소를 발생하므로 주수하면 위험하다. 건조사 등으로 덮어 질식소화한다." },
+
+  { cls: 3, lv: "B", tag: "소화", q: "금수성 물질의 화재에는 건조사, 팽창질석, 팽창진주암 등으로 소화한다.", a: "O",
+    e: "맞다. 금수성 물질은 물과 반응하므로 주수하지 않고 건조사, 팽창질석·팽창진주암, 탄산수소염류 분말로 소화한다." },
+  { cls: 3, lv: "C", tag: "운반", q: "자연발화성 물질의 운반용기에는 '화기엄금'과 '공기접촉엄금'을 표시한다.", a: "O",
+    e: "맞다. 제3류 중 자연발화성 물질은 '화기엄금'과 '공기접촉엄금', 금수성 물질은 '물기엄금'을 표시한다." },
+
+  { cls: 5, lv: "A", tag: "성질", q: "제5류 위험물은 분자 안에 산소를 갖고 있어 외부 산소 없이도 연소할 수 있다.", a: "O",
+    e: "맞다. 그래서 제5류 위험물은 질식소화가 듣지 않고, 다량의 물로 냉각소화한다." },
+  { cls: 5, lv: "C", tag: "운반", q: "제5류 위험물 운반용기 외부에는 '화기엄금'과 '충격주의'를 표시한다.", a: "O",
+    e: "맞다. 제5류 위험물은 가열·충격에 민감하므로 '화기엄금'과 '충격주의'를 표시한다." },
+  { cls: 5, lv: "C", tag: "품명", q: "셀룰로이드는 제5류 위험물 중 질산에스터류에 속한다.", a: "O",
+    e: "맞다. 셀룰로이드는 나이트로셀룰로오스를 주원료로 한 질산에스터류이며, 자연발화 위험이 있다." },
+
+  { cls: 6, lv: "A", tag: "성질", q: "제6류 위험물은 물과 반응하여 가연성 가스를 발생한다.", a: "X",
+    e: "틀리다. 제6류 위험물은 물과 반응해 가연성 가스를 만들지 않는다. 물과 반응해 가연성 가스를 내는 것은 칼륨, 나트륨 같은 제3류 금수성 물질이다." },
+  { cls: 6, lv: "B", tag: "저장", q: "과산화수소에는 분해를 막기 위해 인산이나 요산 같은 안정제를 넣는다.", a: "O",
+    e: "맞다. 과산화수소는 쉽게 분해되므로 인산, 요산 등을 안정제로 넣는다." }
+];
+
+const SA = [
+  { tag: "유별", q: "제4류 위험물의 성질을 쓰시오.", ans: ["인화성 액체", "인화성액체"], show: "인화성 액체",
+    e: "제4류 위험물은 인화성 액체다. 휘발유, 경유, 알코올류 등이 해당한다." },
+  { tag: "제4류", q: "휘발유(제1석유류, 비수용성)의 지정수량은 몇 L인가?", ans: ["200"], unit: "L", show: "200L",
+    e: "제1석유류 비수용성액체의 지정수량은 200L다." },
+  { tag: "제4류", q: "특수인화물의 지정수량은 몇 L인가?", ans: ["50"], unit: "L", show: "50L",
+    e: "특수인화물의 지정수량은 50L다. 디에틸에테르, 이황화탄소 등이 해당한다." },
+  { tag: "제4류", q: "동식물유류의 지정수량은 몇 L인가?", ans: ["10000", "1만"], unit: "L", show: "10,000L",
+    e: "동식물유류의 지정수량은 10,000L다." },
+  { tag: "제4류", q: "제1석유류는 1기압에서 인화점이 몇 ℃ 미만인 것인가?", ans: ["21"], unit: "℃", show: "21℃",
+    e: "제1석유류는 인화점 21℃ 미만인 것이다." },
+  { tag: "저장", q: "황린을 저장할 때 사용하는 보호액을 쓰시오.", ans: ["물", "물속"], show: "물",
+    e: "황린은 공기 중에서 자연발화하므로 물속에 저장한다." },
+  { tag: "저장", q: "칼륨과 나트륨을 저장할 때 사용하는 보호액을 한 가지 쓰시오.", ans: ["석유", "등유", "경유", "유동파라핀", "석유류"], show: "석유(등유, 경유, 유동파라핀)",
+    e: "칼륨과 나트륨은 물과 반응하므로 등유, 경유, 유동파라핀 같은 석유류 속에 저장한다." },
+  { tag: "성질", q: "탄화칼슘이 물과 반응하여 생성되는 가연성 가스의 이름을 쓰시오.", ans: ["아세틸렌", "c2h2", "아세틸렌가스"], show: "아세틸렌(C₂H₂)",
+    e: "탄화칼슘(CaC₂)은 물과 반응하여 아세틸렌(C₂H₂)과 수산화칼슘을 생성한다." },
+  { tag: "계산", q: "휘발유 400L와 경유 1,000L를 함께 저장할 때 지정수량 배수의 합은 몇 배인가? (둘 다 비수용성)", ans: ["3"], unit: "배", show: "3배",
+    e: "휘발유 400L ÷ 200L = 2배, 경유 1,000L ÷ 1,000L = 1배이므로 합은 3배다." },
+  { tag: "운반", q: "제4류 위험물 운반용기 외부에 표시하는 주의사항을 쓰시오. (4글자)", ans: ["화기엄금"], show: "화기엄금",
+    e: "제4류 위험물은 운반용기 외부에 '화기엄금'을 표시한다." },
+
+  { cls: 1, lv: "A", tag: "유별", q: "제1류 위험물의 성질을 쓰시오.", ans: ["산화성 고체", "산화성고체"], show: "산화성 고체",
+    e: "제1류 위험물은 산화성 고체다. 염소산염류, 질산염류, 무기과산화물 등이 해당한다." },
+  { cls: 1, lv: "B", tag: "지정수량", q: "제1류 위험물 중 질산염류의 지정수량은 몇 kg인가?", ans: ["300"], unit: "kg", show: "300kg",
+    e: "질산염류, 브로민산염류, 아이오딘산염류의 지정수량은 300kg이다." },
+  { cls: 1, lv: "C", tag: "지정수량", q: "제1류 위험물 중 아염소산염류의 지정수량은 몇 kg인가?", ans: ["50"], unit: "kg", show: "50kg",
+    e: "아염소산염류, 염소산염류, 과염소산염류, 무기과산화물의 지정수량은 50kg이다." },
+
+  { cls: 2, lv: "A", tag: "유별", q: "제2류 위험물의 성질을 쓰시오.", ans: ["가연성 고체", "가연성고체"], show: "가연성 고체",
+    e: "제2류 위험물은 가연성 고체다. 황화인, 적린, 황, 철분, 마그네슘 등이 해당한다." },
+  { cls: 2, lv: "B", tag: "성질", q: "마그네슘이 물과 반응하여 발생하는 가연성 가스를 쓰시오.", ans: ["수소", "h2", "수소가스"], show: "수소(H₂)",
+    e: "마그네슘은 물과 반응해 수소를 발생하므로 주수소화하지 않는다." },
+  { cls: 2, lv: "C", tag: "정의", q: "황은 순도가 몇 중량퍼센트 이상인 것을 위험물로 보는가?", ans: ["60"], unit: "%", show: "60중량퍼센트",
+    e: "황은 순도 60중량퍼센트 이상인 것이 위험물이다. 불순물은 활석 등 불연성 물질과 수분으로 한정한다." },
+
+  { cls: 3, lv: "B", tag: "지정수량", q: "제3류 위험물 중 칼륨의 지정수량은 몇 kg인가?", ans: ["10"], unit: "kg", show: "10kg",
+    e: "칼륨, 나트륨, 알킬알루미늄, 알킬리튬의 지정수량은 10kg이다." },
+
+  { cls: 5, lv: "A", tag: "유별", q: "제5류 위험물의 성질을 쓰시오.", ans: ["자기반응성 물질", "자기반응성물질", "자기반응성"], show: "자기반응성 물질",
+    e: "제5류 위험물은 자기반응성 물질이다. 유기과산화물, 질산에스터류, 나이트로화합물 등이 해당한다." },
+  { cls: 5, lv: "B", tag: "소화", q: "제5류 위험물 화재의 가장 효과적인 소화방법을 쓰시오.", ans: ["냉각소화", "냉각", "주수소화", "다량주수", "다량의 물", "물", "다량의 물로 냉각소화", "다량주수 냉각소화"], show: "냉각소화(다량의 물)",
+    e: "제5류 위험물은 자체에 산소가 있어 질식소화가 듣지 않는다. 다량의 물로 냉각소화한다." },
+
+  { cls: 6, lv: "A", tag: "유별", q: "제6류 위험물의 성질을 쓰시오.", ans: ["산화성 액체", "산화성액체"], show: "산화성 액체",
+    e: "제6류 위험물은 산화성 액체다. 과염소산, 과산화수소, 질산 등이 해당한다." },
+  { cls: 6, lv: "C", tag: "운반", q: "제6류 위험물 운반용기 외부에 표시하는 주의사항을 쓰시오.", ans: ["가연물접촉주의"], show: "가연물접촉주의",
+    e: "제6류 위험물은 운반용기 외부에 '가연물접촉주의'를 표시한다." },
+  { cls: 6, lv: "C", tag: "정의", q: "질산은 비중이 얼마 이상인 것을 위험물로 보는가?", ans: ["1.49"], show: "1.49",
+    e: "질산은 비중 1.49 이상인 것이 위험물이다. 과산화수소는 농도 36중량퍼센트 이상인 것이 위험물이다." }
+];
+
+/* 기존 문제의 류·난이도 (기존 기록과 맞도록 문제 번호는 그대로 둔다) */
+const META = {
+  mc0: [4, "A"], mc1: [6, "A"], mc2: [3, "A"], mc3: [5, "A"], mc4: [2, "A"], mc5: [4, "B"], mc6: [4, "B"], mc7: [4, "A"],
+  mc8: [4, "B"], mc9: [4, "B"], mc10: [4, "B"], mc11: [4, "C"], mc12: [3, "A"], mc13: [3, "A"], mc14: [4, "B"], mc15: [3, "B"],
+  mc16: [6, "B"], mc17: [4, "B"], mc18: [4, "C"], mc19: [0, "C"],
+  ox0: [1, "A"], ox1: [3, "A"], ox2: [4, "B"], ox3: [4, "B"], ox4: [3, "A"], ox5: [6, "A"], ox6: [4, "A"], ox7: [5, "B"],
+  ox8: [4, "B"], ox9: [4, "C"],
+  sa0: [4, "A"], sa1: [4, "B"], sa2: [4, "B"], sa3: [4, "C"], sa4: [4, "C"], sa5: [3, "A"], sa6: [3, "B"], sa7: [3, "C"],
+  sa8: [4, "C"], sa9: [4, "C"]
+};
+const CLS_NAME = { 1: "산화성 고체", 2: "가연성 고체", 3: "자연발화·금수", 4: "인화성 액체", 5: "자기반응성", 6: "산화성 액체" };
+const LV_NAME = { A: "기초", B: "중급", C: "심화" };
+const clsLabel = it => it.cls ? `제${it.cls}류` : "법령";
+
+const withMeta = (x, id, type) => {
+  const m = META[id] || [x.cls || 0, x.lv || "B"];
+  return { ...x, id, type, cls: x.cls != null ? x.cls : m[0], lv: x.lv || m[1] };
+};
+const POOL = [
+  ...QUESTIONS.map((x, i) => withMeta(x, "mc" + i, "mc")),
+  ...OX.map((x, i) => withMeta(x, "ox" + i, "ox")),
+  ...SA.map((x, i) => withMeta(x, "sa" + i, "sa"))
+];
+const BY_ID = Object.fromEntries(POOL.map(x => [x.id, x]));
+const TYPE_NAME = { mc: "객관식", sa: "단답식", ox: "O/X" };
+const UNIT_WORDS = {
+  "L": ["l", "리터"], "℃": ["℃", "°c", "도"], "배": ["배"], "일": ["일"],
+  "kg": ["kg", "킬로그램", "킬로"], "%": ["중량퍼센트", "퍼센트", "wt%", "%"]
+};
+
+const PASS = 60;
+const app = document.getElementById("app");
+const KEY = "hazmat-quiz-v1";
+const MODES = ["객관식", "단답식", "O/X", "종합", "오답 재도전", "제1류", "제2류", "제3류", "제4류", "제5류", "제6류"];
+const modeMatch = (mode, m) => mode === m || String(mode).startsWith(m + " ");
+const pick = { cls: 1, lv: "all" };
+
+function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
+function save(data) { try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {} }
+
+let store = load();
+let state = { v: 2, view: "start", order: [], idx: 0, picks: [], name: store.name || "", sid: store.sid || "", mode: "" };
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+function esc(s) { return String(s).replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch])); }
+const MARK = ["①", "②", "③", "④"];
+const ids = type => POOL.filter(x => x.type === type).map(x => x.id);
+
+function norm(s, unit) {
+  let t = String(s).toLowerCase().replace(/[\s,.·()'"‘’“”]/g, "").replace(/₂/g, "2");
+  if (unit) for (const w of UNIT_WORDS[unit] || []) if (t.endsWith(w)) { t = t.slice(0, -w.length); break; }
+  return t;
+}
+function grade(item, value) {
+  if (value == null) return false;
+  if (item.type === "sa") return item.ans.some(a => norm(a, item.unit) === norm(value, item.unit));
+  return value === item.a;
+}
+function shown(item, value) {
+  if (item.type === "mc") return item.c[value - 1] ? `${MARK[value - 1]} ${item.c[value - 1]}` : String(value);
+  return String(value);
+}
+function rightAnswer(item) {
+  if (item.type === "mc") return `${MARK[item.a - 1]} ${item.c[item.a - 1]}`;
+  if (item.type === "sa") return item.show;
+  return item.a;
+}
+function scoreOf(rec) {
+  const total = rec.order.length;
+  const right = rec.order.filter((id, i) => BY_ID[id] && grade(BY_ID[id], rec.answers[i])).length;
+  return { right, total, score: total ? Math.round((right / total) * 100) : 0 };
+}
+function fmtTime(t) {
+  const d = new Date(t), p = n => String(n).padStart(2, "0");
+  return `${d.getFullYear()}.${p(d.getMonth() + 1)}.${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+function withTimeout(promise, ms) {
+  return Promise.race([promise, new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), ms))]);
+}
+
+/* 제출 코드: 학번·이름·답안을 담은 문자열 (자동 제출이 안 될 때 사용) */
+function encodeAttempt(r) {
+  const json = JSON.stringify({ v: 1, s: r.sid, n: r.name, t: r.t, m: r.mode, o: r.order, a: r.answers });
+  let bin = "";
+  new TextEncoder().encode(json).forEach(b => { bin += String.fromCharCode(b); });
+  return "WQ1-" + btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+function decodeAttempt(code) {
+  try {
+    const c = code.trim();
+    if (!c.startsWith("WQ1-")) return null;
+    let b = c.slice(4).replace(/-/g, "+").replace(/_/g, "/");
+    while (b.length % 4) b += "=";
+    const bytes = Uint8Array.from(atob(b), ch => ch.charCodeAt(0));
+    const o = JSON.parse(new TextDecoder().decode(bytes));
+    if (!o || !Array.isArray(o.o) || !Array.isArray(o.a) || o.o.length !== o.a.length || !o.o.length) return null;
+    if (!o.o.every(id => BY_ID[id])) return null;
+    return { sid: String(o.s || ""), name: String(o.n || ""), t: Number(o.t) || 0, mode: String(o.m || ""), order: o.o.map(String), answers: o.a };
+  } catch (e) { return null; }
+}
+
+/* 공유 저장소와 사용자 정보 */
+const cap = { db: null, user: null, uid: null, owner: false, downloads: null };
+const capsReady = (async () => {
+  if (!window.claude || !window.claude.use) return;
+  try {
+    const [db, user] = await Promise.all([window.claude.use("db"), window.claude.use("user")]);
+    cap.db = db; cap.user = user;
+    if (user) { cap.owner = await user.isOwner(); cap.uid = await user.id(); }
+    if (cap.owner) cap.downloads = await window.claude.use("downloads");
+  } catch (e) {}
+})();
+capsReady.then(() => { paintAdminEntry(); if (location.hash === "#admin") route(); });
+
+function paintAdminEntry() {
+  const el = document.getElementById("admin-entry");
+  if (el) el.innerHTML = cap.owner ? `<a class="admin-link" href="#admin">관리자 모드</a>` : "";
+}
+
+function route() {
+  if (location.hash === "#admin" && cap.owner) renderAdmin();
+  else { stopAdmin(); render(); }
+}
+
+function startQuiz(order, mode) {
+  state = { v: 2, view: "quiz", order, idx: 0, picks: [], name: state.name, sid: state.sid, mode };
+  render();
+}
+
+function render() {
+  window.scrollTo({ top: 0 });
+  if (state.view === "start") renderStart();
+  else if (state.view === "quiz") renderQuiz();
+  else renderResult();
+}
+
+function renderStart() {
+  const best = store.best != null ? `10문제 이상 최고 기록 ${store.best}점` : "아직 기록이 없어요";
+  app.innerHTML = `
+    <section class="panel">
+      <div style="display:grid;gap:6px">
+        <h2>풀 유형을 고르세요</h2>
+        <p class="muted">문제 순서는 매번 섞입니다. ${best}</p>
+      </div>
+      <div class="who">
+        <div class="field">
+          <label for="sid">학번</label>
+          <input id="sid" type="text" inputmode="numeric" maxlength="12" placeholder="예: 2026123456" value="${esc(state.sid || "")}" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="name">이름</label>
+          <input id="name" type="text" maxlength="20" placeholder="예: 홍길동" value="${esc(state.name || "")}" autocomplete="name">
+        </div>
+      </div>
+      <p class="form-error" id="who-error" hidden>학번과 이름을 입력해야 시작할 수 있어요.</p>
+      <div class="group">
+        <span class="group-label">류별 · 난이도별 연습</span>
+        <div class="pick pick-cls" role="group" aria-label="류 선택">
+          ${[1, 2, 3, 4, 5, 6].map(c => `<button class="pick-btn" data-cls="${c}" aria-pressed="${pick.cls === c}"><b>제${c}류</b><span>${CLS_NAME[c]}</span></button>`).join("")}
+        </div>
+        <div class="pick pick-lv" role="group" aria-label="난이도 선택">
+          ${["all", "A", "B", "C"].map(l => `<button class="pick-btn" data-lv="${l}" aria-pressed="${pick.lv === l}"><b>${l === "all" ? "전체" : l}</b><span>${l === "all" ? "섞어서" : LV_NAME[l]}</span></button>`).join("")}
+        </div>
+        <button class="btn btn-primary" id="mode-cls"></button>
+      </div>
+      <div class="group">
+        <span class="group-label">객관식</span>
+        <button class="mode" id="mode-mc"><strong>객관식 10문제</strong><span>4지선다 · ${ids("mc").length}문제 중 랜덤</span></button>
+      </div>
+      <div class="group">
+        <span class="group-label">서술형</span>
+        <button class="mode" id="mode-sa"><strong>단답식 10문제</strong><span>답을 직접 입력 · ${ids("sa").length}문제 중 랜덤 · 단위는 빼고 써도 정답</span></button>
+        <button class="mode" id="mode-ox"><strong>O/X 10문제</strong><span>맞으면 O, 틀리면 X · ${ids("ox").length}문제 중 랜덤</span></button>
+      </div>
+      <div class="group">
+        <span class="group-label">종합</span>
+        <button class="mode" id="mode-mix"><strong>종합 20문제</strong><span>객관식 10 + 단답식 5 + O/X 5 · 시험 전 총정리</span></button>
+      </div>
+    </section>`;
+  const nameEl = document.getElementById("name"), sidEl = document.getElementById("sid"), errEl = document.getElementById("who-error");
+  const sync = () => {
+    state.name = nameEl.value.trim(); state.sid = sidEl.value.trim();
+    store.name = state.name; store.sid = state.sid; save(store);
+    if (state.sid) sidEl.classList.remove("missing");
+    if (state.name) nameEl.classList.remove("missing");
+    if (state.sid && state.name) errEl.hidden = true;
+  };
+  nameEl.addEventListener("input", sync);
+  sidEl.addEventListener("input", sync);
+  const go = (mode, make) => () => {
+    sync();
+    if (!state.sid || !state.name) {
+      errEl.hidden = false;
+      sidEl.classList.toggle("missing", !state.sid);
+      nameEl.classList.toggle("missing", !state.name);
+      (state.sid ? nameEl : sidEl).focus();
+      return;
+    }
+    startQuiz(make(), mode);
+  };
+  document.getElementById("mode-mc").onclick = go("객관식", () => shuffle(ids("mc")).slice(0, 10));
+  document.getElementById("mode-sa").onclick = go("단답식", () => shuffle(ids("sa")).slice(0, 10));
+  document.getElementById("mode-ox").onclick = go("O/X", () => shuffle(ids("ox")).slice(0, 10));
+
+  const clsIds = () => POOL.filter(x => x.cls === pick.cls && (pick.lv === "all" || x.lv === pick.lv)).map(x => x.id);
+  const clsBtn = document.getElementById("mode-cls");
+  const paintPick = () => {
+    app.querySelectorAll("[data-cls]").forEach(b => b.setAttribute("aria-pressed", String(Number(b.dataset.cls) === pick.cls)));
+    app.querySelectorAll("[data-lv]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lv === pick.lv)));
+    const n = Math.min(clsIds().length, 15);
+    clsBtn.textContent = `제${pick.cls}류 ${pick.lv === "all" ? "전체" : `${pick.lv} ${LV_NAME[pick.lv]}`} · ${n}문제 시작`;
+  };
+  app.querySelectorAll("[data-cls]").forEach(b => { b.onclick = () => { pick.cls = Number(b.dataset.cls); paintPick(); }; });
+  app.querySelectorAll("[data-lv]").forEach(b => { b.onclick = () => { pick.lv = b.dataset.lv; paintPick(); }; });
+  paintPick();
+  clsBtn.onclick = () => go(`제${pick.cls}류 ${pick.lv === "all" ? "전체" : pick.lv}`, () => shuffle(clsIds()).slice(0, 15))();
+  document.getElementById("mode-mix").onclick = go("종합", () => shuffle([
+    ...shuffle(ids("mc")).slice(0, 10), ...shuffle(ids("sa")).slice(0, 5), ...shuffle(ids("ox")).slice(0, 5)
+  ]));
+}
+
+function answerArea(item, pick) {
+  const answered = pick != null;
+  if (item.type === "mc") {
+    return `<div class="choices">${item.c.map((txt, i) => {
+      const n = i + 1;
+      let cls = "choice";
+      if (answered && n === item.a) cls += " correct";
+      else if (answered && n === pick.value) cls += " wrong";
+      return `<button class="${cls}" data-v="${n}" ${answered ? "disabled" : ""}><span class="num">${MARK[i]}</span><span>${esc(txt)}</span></button>`;
+    }).join("")}</div>`;
+  }
+  if (item.type === "ox") {
+    return `<div class="ox">${["O", "X"].map(v => {
+      let cls = "ox-btn";
+      if (answered && v === item.a) cls += " correct";
+      else if (answered && v === pick.value) cls += " wrong";
+      return `<button class="${cls}" data-v="${v}" aria-label="${v === "O" ? "맞다 O" : "틀리다 X"}" ${answered ? "disabled" : ""}>${v}</button>`;
+    }).join("")}</div>`;
+  }
+  const hint = item.unit ? `숫자만 쓰거나 단위(${item.unit})까지 써도 됩니다.` : "띄어쓰기는 상관없습니다.";
+  return `<form class="sa${answered ? " done" : ""}" id="sa-form" autocomplete="off">
+      <input id="sa-input" type="text" inputmode="${item.unit ? "decimal" : "text"}" placeholder="답 입력"
+        value="${answered ? esc(pick.value) : ""}" ${answered ? `disabled class="${pick.correct ? "correct" : "wrong"}"` : ""} aria-label="답 입력">
+      ${answered ? "" : `<button class="btn btn-primary" type="submit">확인</button>`}
+    </form>
+    ${answered ? "" : `<p class="hint">${hint}</p>`}`;
+}
+
+function renderQuiz() {
+  const total = state.order.length;
+  const item = BY_ID[state.order[state.idx]];
+  const pick = state.picks[state.idx];
+  const answered = pick != null;
+  const pct = ((state.idx + (answered ? 1 : 0)) / total) * 100;
+  const isLast = state.idx === total - 1;
+
+  const feedback = answered ? `
+    <div class="feedback ${pick.correct ? "ok" : "no"}">
+      <span class="verdict">${pick.correct ? "정답입니다" : `오답입니다 · 정답 ${esc(rightAnswer(item))}`}</span>
+      <p>${esc(item.e)}</p>
+    </div>
+    <button class="btn btn-primary" id="next">${isLast ? "결과 보기" : "다음 문제"}</button>` : "";
+
+  app.innerHTML = `
+    <section class="panel">
+      <div style="display:grid;gap:8px">
+        <div class="progress-head"><span class="count">${state.idx + 1} / ${total}</span>
+          <span class="chips"><span class="chip">${TYPE_NAME[item.type]}</span><span class="chip quiet">${clsLabel(item)} · 난이도 ${item.lv}</span></span></div>
+        <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${state.idx + (answered ? 1 : 0)}"><i style="width:${pct}%"></i></div>
+      </div>
+      <p class="question">${esc(item.q)}</p>
+      ${answerArea(item, pick)}
+      ${feedback}
+    </section>`;
+
+  const commit = value => {
+    state.picks[state.idx] = { value, correct: grade(item, value) };
+    renderQuiz();
+    document.getElementById("next")?.focus({ preventScroll: true });
+  };
+  app.querySelectorAll("[data-v]").forEach(btn => {
+    btn.onclick = () => commit(item.type === "mc" ? Number(btn.dataset.v) : btn.dataset.v);
+  });
+  const form = document.getElementById("sa-form");
+  if (form && !answered) {
+    const input = document.getElementById("sa-input");
+    input.focus({ preventScroll: true });
+    form.addEventListener("submit", ev => {
+      ev.preventDefault();
+      const v = input.value.trim();
+      if (!v) { input.placeholder = "답을 입력한 뒤 확인을 누르세요"; input.focus(); return; }
+      commit(v);
+    });
+  }
+  const next = document.getElementById("next");
+  if (next) next.onclick = () => { if (isLast) finish(); else { state.idx++; render(); } };
+}
+
+function finish() {
+  const rec = {
+    sid: state.sid, name: state.name, t: Date.now(), mode: state.mode || "",
+    order: state.order.slice(), answers: state.picks.map(p => (p ? p.value : null))
+  };
+  const result = scoreOf(rec);
+  if (result.total >= 10) { store.best = Math.max(store.best || 0, result.score); save(store); }
+  state.view = "result";
+  state.result = result;
+  state.rec = rec;
+  state.submit = "pending";
+  render();
+  submitAttempt(rec);
+}
+
+async function submitAttempt(rec) {
+  await withTimeout(capsReady, 12000).catch(() => {});
+  if (cap.db && cap.uid) {
+    try {
+      const ref = cap.db.doc("submissions/" + cap.uid);
+      const snap = await withTimeout(ref.get(), 8000);
+      const body = snap.exists ? snap.data() : null;
+      const prev = body && Array.isArray(body.attempts) ? body.attempts : [];
+      if (!prev.some(a => a.t === rec.t)) {
+        await withTimeout(ref.set({ updatedAt: Date.now(), attempts: [...prev, rec].slice(-60) }), 8000);
+      }
+      if (state.rec === rec) { state.submit = "done"; paintSubmit(); }
+      return;
+    } catch (e) {}
+  }
+  if (state.rec === rec) { state.submit = "code"; paintSubmit(); }
+}
+
+function paintSubmit() {
+  const box = document.getElementById("submit-box");
+  if (!box) return;
+  if (!state.rec) { box.hidden = true; return; }
+  if (state.submit === "pending") {
+    box.innerHTML = `<h2>결과 제출</h2><p class="muted">교수님께 제출하는 중이에요…</p>`;
+    return;
+  }
+  if (state.submit === "done") {
+    box.innerHTML = `<h2>결과 제출</h2><p class="submit-ok">교수님께 제출했어요.</p>
+      <p class="muted">${esc(state.sid)} ${esc(state.name)} · ${state.result.score}점 · 답안 ${state.result.total}개</p>`;
+    return;
+  }
+  const code = encodeAttempt(state.rec);
+  box.innerHTML = `<h2>제출 코드</h2>
+    <p>이 화면에서는 자동 제출이 되지 않아요. 아래 코드를 복사해서 교수님께 보내주세요. 학번, 이름, 답안이 모두 들어 있어요.</p>
+    <textarea id="code" class="code" readonly rows="4" aria-label="제출 코드">${esc(code)}</textarea>
+    <button class="btn btn-primary" id="copy">코드 복사</button>
+    <p class="muted" id="copy-msg" aria-live="polite"></p>`;
+  const ta = document.getElementById("code"), msg = document.getElementById("copy-msg");
+  document.getElementById("copy").onclick = () => {
+    const fallback = () => { ta.focus(); ta.select(); msg.textContent = "코드를 선택했어요. 길게 눌러 복사하세요."; };
+    try {
+      navigator.clipboard.writeText(code).then(() => { msg.textContent = "복사했어요. 단톡방이나 메시지로 교수님께 보내주세요."; }, fallback);
+    } catch (e) { fallback(); }
+  };
+}
+
+function renderResult() {
+  const { right, total, score } = state.result;
+  const pass = score >= PASS;
+  const d = new Date();
+  const date = `${d.getFullYear()}. ${d.getMonth() + 1}. ${d.getDate()}.`;
+  const items = state.order.map((id, i) => ({ item: BY_ID[id], pick: state.picks[i] }));
+  const wrong = items.filter(o => !o.pick.correct);
+
+  const types = ["mc", "sa", "ox"].filter(t => items.some(o => o.item.type === t));
+  const breakdown = types.length > 1 ? `<div class="breakdown">${types.map(t => {
+    const all = items.filter(o => o.item.type === t);
+    return `<div><span>${TYPE_NAME[t]}</span><b>${all.filter(o => o.pick.correct).length} / ${all.length}</b></div>`;
+  }).join("")}</div>` : "";
+
+  const review = wrong.length ? wrong.map(({ item, pick }) => `
+    <div class="review-item">
+      <span class="chips"><span class="chip">${TYPE_NAME[item.type]}</span></span>
+      <p class="q">${esc(item.q)}</p>
+      <p class="a">정답 ${esc(rightAnswer(item))}</p>
+      <p class="mine">내 답 ${esc(shown(item, pick.value))}</p>
+      <p class="muted">${esc(item.e)}</p>
+    </div>`).join("") : `<p class="muted">틀린 문제가 없어요. 모두 맞혔습니다.</p>`;
+
+  app.innerHTML = `
+    <section class="cert" aria-label="결과">
+      <div class="cert-top"><span>위험물 Quiz 결과</span><span>${date}</span></div>
+      ${state.sid || state.name ? `<p class="name"><span class="sid">${esc(state.sid || "")}</span>${esc(state.name || "")}</p>` : ""}
+      <div class="score"><b>${score}</b><span>점</span></div>
+      <p class="muted">${total}문제 중 ${right}문제 정답</p>
+      ${breakdown}
+      <span class="verdict-pill ${pass ? "pass" : "fail"}">${pass ? `합격선 ${PASS}점 통과` : `합격선 ${PASS}점까지 ${PASS - score}점`}</span>
+    </section>
+    <div style="height:16px"></div>
+    <section class="panel" id="submit-box" aria-live="polite"></section>
+    <div style="height:16px"></div>
+    <section class="panel">
+      <h2>틀린 문제 ${wrong.length}개</h2>
+      <div class="review">${review}</div>
+      <div class="btn-row">
+        ${wrong.length ? `<button class="btn btn-primary" id="retry-wrong">틀린 문제 다시 풀기</button>` : ""}
+        <button class="btn" id="home" ${wrong.length ? "" : 'style="grid-column:1/-1"'}>처음으로</button>
+      </div>
+    </section>`;
+
+  paintSubmit();
+  const rw = document.getElementById("retry-wrong");
+  if (rw) rw.onclick = () => startQuiz(shuffle(wrong.map(o => o.item.id)), "오답 재도전");
+  document.getElementById("home").onclick = () => { state.view = "start"; render(); };
+}
+
+/* ---------- 관리자 모드 (퀴즈 주인 계정에서만) ---------- */
+const admin = { subs: [], auto: [], imp: [], loaded: false, slow: false, error: "", mode: "all", q: "", open: null, del: null, timer: null };
+
+function stopAdmin() {
+  admin.subs.forEach(u => { try { u(); } catch (e) {} });
+  admin.subs = [];
+  clearTimeout(admin.timer);
+}
+
+function startAdmin() {
+  admin.loaded = false; admin.slow = false; admin.error = "";
+  if (!cap.db) { admin.loaded = true; admin.error = "제출 기록 저장소에 연결할 수 없어요. 잠시 뒤 다시 열어주세요."; return; }
+  admin.timer = setTimeout(() => { if (!admin.loaded) { admin.slow = true; paintAdmin(); } }, 10000);
+  admin.subs.push(cap.db.collection("submissions").onSnapshot(snap => {
+    const rows = [];
+    snap.docs.forEach(d => {
+      const body = d.data() || {};
+      (Array.isArray(body.attempts) ? body.attempts : []).forEach(a => rows.push({ ...a, src: "auto", doc: d.id }));
+    });
+    admin.auto = rows;
+    if (!snap.metadata.fromCache) { admin.loaded = true; admin.slow = false; clearTimeout(admin.timer); }
+    paintAdmin();
+  }, () => {
+    admin.loaded = true; admin.error = "제출 기록을 불러오지 못했어요. 페이지를 다시 열어주세요.";
+    clearTimeout(admin.timer); paintAdmin();
+  }));
+  admin.subs.push(cap.db.collection("imports").onSnapshot(snap => {
+    admin.imp = snap.docs.map(d => ({ ...d.data(), src: "code", doc: d.id }));
+    paintAdmin();
+  }, () => {}));
+}
+
+function allRows() {
+  const seen = new Set(), out = [];
+  for (const r of [...admin.auto, ...admin.imp]) {
+    if (!r || !Array.isArray(r.order) || !Array.isArray(r.answers)) continue;
+    const k = r.sid + "|" + r.t;
+    if (seen.has(k)) continue;
+    seen.add(k);
+    out.push({ ...r, key: r.src + ":" + r.doc + ":" + r.t, ...scoreOf(r) });
+  }
+  return out.sort((a, b) => b.t - a.t);
+}
+
+function filterRows(rows) {
+  const q = admin.q.trim();
+  return rows.filter(r => (admin.mode === "all" || modeMatch(r.mode, admin.mode)) &&
+    (!q || String(r.sid).includes(q) || String(r.name).includes(q)));
+}
+
+async function exportExcel() {
+  const msg = document.getElementById("export-msg");
+  const list = filterRows(allRows());
+  if (!list.length) { msg.textContent = "내려받을 제출 기록이 없어요."; return; }
+  if (!window.XLSX) { msg.textContent = "엑셀 변환 도구를 불러오지 못했어요. 페이지를 새로고침한 뒤 다시 눌러주세요."; return; }
+  if (!cap.downloads) { msg.textContent = "이 화면에서는 파일 저장을 쓸 수 없어요. claude.ai에서 퀴즈를 열어 다시 눌러주세요."; return; }
+
+  const answerText = r => r.order.map((id, i) => {
+    const it = BY_ID[id];
+    if (!it) return "";
+    const v = r.answers[i];
+    return `${i + 1}번 ${v == null ? "(무응답)" : shown(it, v)} ${grade(it, v) ? "○" : "✕"}`;
+  }).filter(Boolean).join(" / ");
+  const summary = [["학번", "이름", "점수", "정답 수", "문제 수", "합격선(60점)", "유형", "제출 시각", "제출 방식", "작성한 답 (○ 정답, ✕ 오답)"],
+    ...list.map(r => [String(r.sid), String(r.name), r.score, r.right, r.total, r.score >= PASS ? "통과" : "미달",
+      r.mode, fmtTime(r.t), r.src === "auto" ? "자동 제출" : "제출 코드", answerText(r)])];
+
+  const answers = [["제출 시각", "학번", "이름", "유형", "번호", "문제 유형", "류", "난이도", "문제", "학생 답", "정답", "정오"]];
+  const stat = {}, tstat = {}, cstat = {}, lstat = {};
+  list.forEach(r => r.order.forEach((id, i) => {
+    const it = BY_ID[id];
+    if (!it) return;
+    const v = r.answers[i], ok = grade(it, v);
+    answers.push([fmtTime(r.t), String(r.sid), String(r.name), r.mode, i + 1, TYPE_NAME[it.type], clsLabel(it), it.lv, it.q,
+      v == null ? "(무응답)" : shown(it, v), String(rightAnswer(it)), ok ? "O" : "X"]);
+    const s = stat[id] || (stat[id] = { n: 0, ok: 0 });
+    s.n++; if (ok) s.ok++;
+    const ts = tstat[it.type] || (tstat[it.type] = { n: 0, ok: 0 });
+    ts.n++; if (ok) ts.ok++;
+    const cs = cstat[it.cls] || (cstat[it.cls] = { n: 0, ok: 0 });
+    cs.n++; if (ok) cs.ok++;
+    const ls = lstat[it.lv] || (lstat[it.lv] = { n: 0, ok: 0 });
+    ls.n++; if (ok) ls.ok++;
+  }));
+
+  const items = [["문제 유형", "류", "난이도", "문제", "정답", "응답 수", "정답 수", "정답률(%)"],
+    ...POOL.filter(it => stat[it.id]).map(it => {
+      const s = stat[it.id];
+      return [TYPE_NAME[it.type], clsLabel(it), it.lv, it.q, String(rightAnswer(it)), s.n, s.ok, Math.round((s.ok / s.n) * 100)];
+    }).sort((a, b) => a[7] - b[7])];
+
+  const scores = list.map(r => r.score);
+  const avgOf = a => a.length ? Math.round((a.reduce((s, x) => s + x, 0) / a.length) * 10) / 10 : 0;
+  const median = a => {
+    const s = [...a].sort((x, y) => x - y), m = Math.floor(s.length / 2);
+    return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+  };
+  const pct = (n, d) => d ? Math.round((n / d) * 100) : 0;
+  const passN = scores.filter(s => s >= PASS).length;
+  const q = admin.q.trim();
+  const scope = (admin.mode === "all" ? "전체 유형" : admin.mode) + (q ? ` · 검색어 "${q}"` : "");
+
+  const stats = [
+    ["위험물 Quiz 제출 통계"],
+    ["내려받은 시각", fmtTime(Date.now())],
+    ["범위", scope],
+    [],
+    ["전체 통계"],
+    ["제출 건수", list.length],
+    ["응시 학생 수", new Set(list.map(r => r.sid)).size],
+    ["평균 점수", avgOf(scores)],
+    ["중앙값", median(scores)],
+    ["최고 점수", Math.max(...scores)],
+    ["최저 점수", Math.min(...scores)],
+    ["합격선(60점) 통과", passN],
+    ["통과율(%)", pct(passN, list.length)],
+    [],
+    ["퀴즈 유형별 통계"],
+    ["유형", "제출 건수", "평균 점수", "최고 점수", "최저 점수", "통과 건수", "통과율(%)"],
+    ...[...new Set(list.map(r => r.mode))].sort((a, b) => a.localeCompare(b)).map(m => {
+      const s = list.filter(r => r.mode === m).map(r => r.score), p = s.filter(x => x >= PASS).length;
+      return [m, s.length, avgOf(s), Math.max(...s), Math.min(...s), p, pct(p, s.length)];
+    }),
+    [],
+    ["문제 유형별 정답률"],
+    ["문제 유형", "응답 수", "정답 수", "정답률(%)"],
+    ...["mc", "sa", "ox"].filter(t => tstat[t]).map(t => [TYPE_NAME[t], tstat[t].n, tstat[t].ok, pct(tstat[t].ok, tstat[t].n)]),
+    [],
+    ["류별 정답률"],
+    ["류", "응답 수", "정답 수", "정답률(%)"],
+    ...[1, 2, 3, 4, 5, 6, 0].filter(c => cstat[c]).map(c => [c ? `제${c}류 ${CLS_NAME[c]}` : "법령", cstat[c].n, cstat[c].ok, pct(cstat[c].ok, cstat[c].n)]),
+    [],
+    ["난이도별 정답률"],
+    ["난이도", "응답 수", "정답 수", "정답률(%)"],
+    ...["A", "B", "C"].filter(l => lstat[l]).map(l => [`${l} ${LV_NAME[l]}`, lstat[l].n, lstat[l].ok, pct(lstat[l].ok, lstat[l].n)]),
+    [],
+    ["점수 분포"],
+    ["점수 구간", "제출 건수", "비율(%)"],
+    ...[[80, 100], [60, 79], [40, 59], [0, 39]].map(([lo, hi]) => {
+      const n = scores.filter(s => s >= lo && s <= hi).length;
+      return [`${lo}~${hi}점`, n, pct(n, list.length)];
+    })
+  ];
+
+  const bySid = new Map();
+  [...list].sort((a, b) => a.t - b.t).forEach(r => {
+    const k = String(r.sid);
+    const g = bySid.get(k) || { name: "", scores: [], last: null };
+    g.name = String(r.name); g.scores.push(r.score); g.last = r;
+    bySid.set(k, g);
+  });
+  const students = [["학번", "이름", "응시 횟수", "평균 점수", "최고 점수", "최저 점수", "최근 점수", "최근 제출 시각", "최근 유형"],
+    ...[...bySid.entries()].sort((a, b) => a[0].localeCompare(b[0])).map(([sid, g]) => [
+      sid, g.name, g.scores.length, avgOf(g.scores), Math.max(...g.scores), Math.min(...g.scores),
+      g.last.score, fmtTime(g.last.t), g.last.mode])];
+
+  const wb = XLSX.utils.book_new();
+  const add = (rows, name, widths) => {
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    ws["!cols"] = widths.map(w => ({ wch: w }));
+    XLSX.utils.book_append_sheet(wb, ws, name);
+  };
+  add(stats, "요약 통계", [20, 16, 12, 12, 12, 12, 12]);
+  add(summary, "제출 기록", [12, 10, 6, 8, 8, 12, 11, 17, 10, 90]);
+  add(students, "학생별 요약", [12, 10, 9, 10, 10, 10, 10, 17, 11]);
+  add(answers, "답안", [17, 12, 10, 11, 6, 9, 7, 7, 60, 26, 26, 6]);
+  add(items, "문항별 정답률", [9, 7, 7, 60, 26, 8, 8, 10]);
+  const buf = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+
+  const d = new Date(), p = n => String(n).padStart(2, "0");
+  const filename = `위험물Quiz_제출기록_${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}.xlsx`;
+  msg.textContent = "저장 확인 창에서 저장을 눌러주세요.";
+  try {
+    await cap.downloads.save({ filename, data: buf });
+    msg.textContent = `제출 기록 ${list.length}건을 엑셀 파일로 저장했어요.`;
+  } catch (e) {
+    const c = e && e.code;
+    msg.textContent = c === "declined" ? "저장을 취소했어요."
+      : c === "rate_limited" ? "저장 확인 창이 이미 열려 있어요. 잠시 뒤 다시 눌러주세요."
+      : "파일을 저장하지 못했어요. 잠시 뒤 다시 눌러주세요.";
+  }
+}
+
+function renderAdmin() {
+  window.scrollTo({ top: 0 });
+  app.innerHTML = `
+    <section class="panel">
+      <div class="admin-head"><h2>관리자 모드</h2><a class="admin-link" href="#">퀴즈로 돌아가기</a></div>
+      <p class="muted">이 화면은 퀴즈를 만든 교수님 계정에서만 열립니다. 학생이 자동 제출한 결과와, 붙여넣은 제출 코드가 한 목록에 모입니다.</p>
+    </section>
+    <section class="panel">
+      <h2>제출 코드 추가</h2>
+      <p class="muted">학생이 보낸 제출 코드(WQ1-로 시작)를 붙여넣으세요. 여러 개를 줄바꿈으로 한 번에 넣어도 됩니다.</p>
+      <textarea id="import-codes" class="code" rows="4" placeholder="WQ1-..."></textarea>
+      <button class="btn btn-primary" id="import-btn">코드 추가</button>
+      <p class="muted" id="import-msg" aria-live="polite"></p>
+    </section>
+    <section class="panel">
+      <h2>제출 기록</h2>
+      <div class="filters">
+        <div class="field">
+          <label for="f-mode">유형</label>
+          <select id="f-mode">
+            <option value="all">전체</option>
+            ${MODES.map(m => `<option value="${esc(m)}" ${admin.mode === m ? "selected" : ""}>${esc(m)}</option>`).join("")}
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-q">학번·이름 검색</label>
+          <input id="f-q" type="search" placeholder="예: 2026 또는 홍길동" value="${esc(admin.q)}">
+        </div>
+      </div>
+      <div class="export-row">
+        <button class="btn" id="export-btn">엑셀로 내려받기</button>
+        <span class="muted" id="export-msg" aria-live="polite">지금 목록에 보이는 기록(유형·검색 조건 적용)을 내려받습니다.</span>
+      </div>
+      <div id="admin-list" class="admin-list"></div>
+    </section>`;
+
+  document.getElementById("import-btn").onclick = importCodes;
+  document.getElementById("export-btn").onclick = exportExcel;
+  document.getElementById("f-mode").onchange = e => { admin.mode = e.target.value; admin.open = null; paintAdmin(); };
+  document.getElementById("f-q").oninput = e => { admin.q = e.target.value; paintAdmin(); };
+  document.getElementById("admin-list").onclick = onAdminClick;
+  if (!admin.subs.length) startAdmin();
+  paintAdmin();
+}
+
+function paintAdmin() {
+  const box = document.getElementById("admin-list");
+  if (!box) return;
+  const rows = allRows();
+  const list = filterRows(rows);
+  const students = new Set(list.map(r => r.sid)).size;
+  const avg = list.length ? Math.round(list.reduce((s, r) => s + r.score, 0) / list.length) : 0;
+
+  let status = "";
+  if (admin.error) status = `<p class="form-error">${esc(admin.error)}</p>`;
+  else if (!admin.loaded) status = `<p class="muted">${admin.slow ? "제출 기록에 아직 연결하지 못했어요. 인터넷 연결을 확인해 주세요." : "제출 기록을 불러오는 중이에요…"}</p>`;
+
+  const open = list.find(r => r.key === admin.open);
+  const table = list.length ? `
+    <div class="table-wrap">
+      <table class="subs">
+        <thead><tr><th>제출 시각</th><th>학번</th><th>이름</th><th>유형</th><th class="num">점수</th><th class="num">정답</th><th>답안</th></tr></thead>
+        <tbody>${list.map(r => `
+          <tr class="${r.key === admin.open ? "open" : ""}">
+            <td class="mono">${fmtTime(r.t)}</td>
+            <td class="mono">${esc(r.sid)}</td>
+            <td>${esc(r.name)}</td>
+            <td>${esc(r.mode)}</td>
+            <td class="num"><span class="score-pill ${r.score >= PASS ? "pass" : "fail"}">${r.score}</span></td>
+            <td class="num">${r.right}/${r.total}</td>
+            <td><button class="link-btn" data-open="${esc(r.key)}">${r.key === admin.open ? "닫기" : "답안 보기"}</button></td>
+          </tr>`).join("")}
+        </tbody>
+      </table>
+    </div>` : (admin.loaded && !admin.error ? `<p class="muted">${rows.length ? "조건에 맞는 제출 기록이 없어요." : "아직 제출된 결과가 없어요. 학생이 퀴즈를 마치면 여기에 모입니다. 자동 제출이 안 되는 학생이 보낸 제출 코드는 위에 붙여넣으세요."}</p>` : "");
+
+  box.innerHTML = `
+    ${status}
+    <div class="stats">
+      <div><span>제출</span><b>${list.length}건</b></div>
+      <div><span>학생</span><b>${students}명</b></div>
+      <div><span>평균 점수</span><b>${list.length ? avg + "점" : "-"}</b></div>
+    </div>
+    ${open ? detailHtml(open) : ""}
+    ${table}`;
+}
+
+function detailHtml(r) {
+  const items = r.order.map((id, i) => {
+    const it = BY_ID[id];
+    if (!it) return "";
+    const v = r.answers[i];
+    const ok = grade(it, v);
+    return `<li class="ans ${ok ? "ok" : "no"}">
+      <div class="ans-head"><span class="mono">${i + 1}.</span><span class="chip">${TYPE_NAME[it.type]}</span><span class="ans-mark">${ok ? "정답" : "오답"}</span></div>
+      <p class="q">${esc(it.q)}</p>
+      <p>학생 답: <b>${esc(v == null ? "(무응답)" : shown(it, v))}</b></p>
+      ${ok ? "" : `<p class="muted">정답: ${esc(rightAnswer(it))}</p>`}
+    </li>`;
+  }).join("");
+  const del = admin.del === r.key
+    ? `<span class="muted">이 제출 기록을 삭제할까요? 되돌릴 수 없어요.</span>
+       <button class="btn btn-danger" data-del-yes="${esc(r.key)}">삭제</button>
+       <button class="btn" data-del-no="1">취소</button>`
+    : `<button class="btn" data-del="${esc(r.key)}">기록 삭제</button>`;
+  return `<div class="detail" id="detail">
+    <div class="detail-head">
+      <div>
+        <p class="name"><span class="sid">${esc(r.sid)}</span>${esc(r.name)}</p>
+        <p class="muted">${esc(r.mode)} · ${fmtTime(r.t)} · ${r.src === "auto" ? "자동 제출" : "제출 코드"}</p>
+      </div>
+      <div class="score small"><b>${r.score}</b><span>점</span></div>
+    </div>
+    <p class="muted">${r.total}문제 중 ${r.right}문제 정답</p>
+    <ol class="ans-list">${items}</ol>
+    <div class="detail-actions">${del}<button class="btn" data-close="1">닫기</button></div>
+  </div>`;
+}
+
+function onAdminClick(e) {
+  const b = e.target.closest("button");
+  if (!b) return;
+  if (b.dataset.open) {
+    admin.open = admin.open === b.dataset.open ? null : b.dataset.open;
+    admin.del = null; paintAdmin();
+    if (admin.open) document.getElementById("detail")?.scrollIntoView({ block: "start" });
+  } else if (b.dataset.close) { admin.open = null; admin.del = null; paintAdmin(); }
+  else if (b.dataset.del) { admin.del = b.dataset.del; paintAdmin(); }
+  else if (b.dataset.delNo) { admin.del = null; paintAdmin(); }
+  else if (b.dataset.delYes) deleteRow(b.dataset.delYes);
+}
+
+async function deleteRow(key) {
+  const r = allRows().find(x => x.key === key);
+  if (!r || !cap.db) return;
+  try {
+    if (r.src === "code") {
+      await cap.db.doc("imports/" + r.doc).delete();
+    } else {
+      const ref = cap.db.doc("submissions/" + r.doc);
+      const snap = await ref.get();
+      const body = snap.exists ? snap.data() : {};
+      const list = Array.isArray(body.attempts) ? body.attempts : [];
+      await ref.set({ ...body, attempts: list.filter(a => a.t !== r.t) });
+    }
+    admin.open = null; admin.del = null; admin.error = "";
+    paintAdmin();
+  } catch (e) {
+    admin.error = "삭제하지 못했어요. 잠시 뒤 다시 시도해 주세요."; paintAdmin();
+  }
+}
+
+async function importCodes() {
+  const ta = document.getElementById("import-codes"), msg = document.getElementById("import-msg");
+  const parts = ta.value.split(/\s+/).filter(Boolean);
+  if (!parts.length) { msg.textContent = "붙여넣은 코드가 없어요."; return; }
+  if (!cap.db) { msg.textContent = "저장소에 연결할 수 없어 추가하지 못했어요. 잠시 뒤 다시 시도해 주세요."; return; }
+  const existing = new Set(allRows().map(r => r.sid + "|" + r.t));
+  let added = 0, dup = 0, bad = 0;
+  for (const p of parts) {
+    const rec = decodeAttempt(p);
+    if (!rec) { bad++; continue; }
+    const k = rec.sid + "|" + rec.t;
+    if (existing.has(k)) { dup++; continue; }
+    existing.add(k);
+    const id = (rec.t + "-" + rec.sid).replace(/[^A-Za-z0-9_\-~:@+]/g, "_").slice(0, 150);
+    try { await cap.db.doc("imports/" + id).set(rec); added++; } catch (e) { bad++; }
+  }
+  msg.textContent = `${added}건 추가했어요.` +
+    (dup ? ` 이미 있는 기록 ${dup}건은 건너뛰었어요.` : "") +
+    (bad ? ` 읽을 수 없는 코드 ${bad}건이 있어요. 코드가 잘리지 않았는지 확인해 주세요.` : "");
+  if (added && !bad) ta.value = "";
+}
+
+function boot(saved) {
+  if (saved && saved.v === 2 && saved.view) state = saved;
+  state.sid = state.sid || store.sid || "";
+  state.name = state.name || store.name || "";
+  route();
+}
+window.addEventListener("hashchange", route);
+window.claude?.hot?.snapshot?.(() => state);
+window.claude?.hot?.ready ? window.claude.hot.ready(boot) : boot(window.claude?.hot?.data);
+</script>
+
+</body>
+</html>
